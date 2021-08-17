@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
-import olszowka.expenseorganizer.controllers.MainController;
+import olszowka.expenseorganizer.controllers.MainStageController;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -31,7 +31,7 @@ public class JavaFxApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FxWeaver fxWeaver = applicationContext.getBean(FxWeaver.class);
-        Parent root = fxWeaver.loadView(MainController.class);
+        Parent root = fxWeaver.loadView(MainStageController.class);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
