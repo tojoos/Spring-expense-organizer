@@ -11,8 +11,6 @@ import olszowka.expenseorganizer.controllers.MainStageController;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.util.Objects;
-
 public class JavaFxApplication extends Application {
     private ConfigurableApplicationContext applicationContext;
 
@@ -35,8 +33,9 @@ public class JavaFxApplication extends Application {
     public void start(Stage stage) throws Exception {
         FxWeaver fxWeaver = applicationContext.getBean(FxWeaver.class);
         Parent root = fxWeaver.loadView(MainStageController.class);
-        stage.getIcons().add(new Image(String.valueOf(getClass().getClassLoader().getResource("icon\\expense_icon.png"))));
         Scene scene = new Scene(root);
+        stage.getIcons().add(new Image(String.valueOf(getClass().getClassLoader().getResource("icon\\expense_icon.png"))));
+        stage.setTitle("Expense Organizer");
         stage.setScene(scene);
         stage.show();
     }
