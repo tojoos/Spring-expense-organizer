@@ -44,15 +44,22 @@ public class MainStageController implements Initializable {
     @FXML
     private Text outcomeTotalSumText, incomeTotalSumText;
 
+    @FXML
+    private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField;
+
+    @FXML
+    private MenuButton outcomeCategoryMenuButton;
+
     public MainStageController(IncomeService incomeService, OutcomeService outcomeService) {
         this.incomeService = incomeService;
         this.outcomeService = outcomeService;
-        outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> updateOutcomeTotalSumTextField());
-        incomeObservableList.addListener((ListChangeListener<Income>) change -> updateIncomeTotalSumTextField());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> updateOutcomeTotalSumTextField());
+        incomeObservableList.addListener((ListChangeListener<Income>) change -> updateIncomeTotalSumTextField());
+
         initializeTableViews();
     }
 
@@ -68,7 +75,6 @@ public class MainStageController implements Initializable {
 
         outcomeTableView.setItems(outcomeObservableList);
         incomeTableView.setItems(incomeObservableList);
-
     }
 
     private void updateOutcomeTotalSumTextField() {
@@ -77,5 +83,19 @@ public class MainStageController implements Initializable {
 
     private void updateIncomeTotalSumTextField() {
         incomeTotalSumText.setText("+" + incomeService.calculateTotalAmount() + " zł");
+    }
+
+    @FXML
+    private void onOutcomeSubmitButtonClicked() {
+        outcomeService.getAllPositions().add(new Outcome(outcomeNameTextField.getText(), Double.parseDouble(outcomeValueTextField.getText())));
+        outcomeObservableList.clear();
+        outcomeObservableList.addAll(outcomeService.getAllPositions());
+    }
+
+    @FXML
+    private void onIncomeSubmitButtonClicked() {
+        incomeService.getAllPositions().add(new Income(incomeNameTextField.getText(), Double.parseDouble(incomeValueTextField.getText())));
+        incomeObservableList.clear();
+        incomeObservableList.addAll(incomeService.getAllPositions());
     }
 }
