@@ -1,5 +1,6 @@
 package olszowka.expenseorganizer.services;
 
+import olszowka.expenseorganizer.model.Outcome;
 import olszowka.expenseorganizer.model.Position;
 
 import java.util.HashSet;
@@ -22,5 +23,13 @@ public abstract class PositionService<T extends Position> {
 
     void clearAllPositions() {
         positions.clear();
+    }
+
+    double calculateTotalAmount() {
+        double sum = 0;
+        for(T o : getAllPositions()) {
+            sum += o.getValue();
+        }
+        return sum;
     }
 }

@@ -12,4 +12,6 @@ public interface CrudService<T extends Position> {
     void deletePosition(T position);
 
     void clearAllPositions();
+
+    double calculateTotalAmount();
 }

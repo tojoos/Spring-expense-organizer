@@ -26,4 +26,9 @@ public class OutcomeServiceImpl extends PositionService<Outcome> implements Outc
     public void clearAllPositions() {
         super.clearAllPositions();
     }
+
+    @Override
+    public double calculateTotalAmount() {
+        return super.calculateTotalAmount();
+    }
 }

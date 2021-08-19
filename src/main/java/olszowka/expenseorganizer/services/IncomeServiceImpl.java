@@ -26,4 +26,9 @@ public class IncomeServiceImpl extends PositionService<Income> implements Income
     public void addPosition(Income position) {
         super.addPosition(position);
     }
+
+    @Override
+    public double calculateTotalAmount() {
+        return super.calculateTotalAmount();
+    }
 }
