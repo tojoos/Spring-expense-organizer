@@ -1,8 +1,17 @@
 package olszowka.expenseorganizer.model;
 
-public class Position {
+public abstract class Position {
     private String name;
     private double value;
+
+    public Position() {
+
+    }
+
+    public Position(String name, double value) {
+        this.name = name;
+        this.value = value;
+    }
 
     public String getName() {
         return name;
