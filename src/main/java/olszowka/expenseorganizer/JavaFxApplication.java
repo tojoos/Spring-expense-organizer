@@ -30,7 +30,7 @@ public class JavaFxApplication extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         FxWeaver fxWeaver = applicationContext.getBean(FxWeaver.class);
         Parent root = fxWeaver.loadView(MainStageController.class);
         Scene scene = new Scene(root);

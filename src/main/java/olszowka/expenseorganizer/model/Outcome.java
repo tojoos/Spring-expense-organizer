@@ -6,7 +6,7 @@ public class Outcome extends Position {
 
     }
 
-    public Outcome(String name, double value) {
-        super(name, value);
+    public Outcome(String name, double value, String category) {
+        super(name, value, category);
     }
 }

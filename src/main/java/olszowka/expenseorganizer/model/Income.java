@@ -6,7 +6,7 @@ public class Income extends Position {
 
     }
 
-    public Income(String name, double value) {
-        super(name, value);
+    public Income(String name, double value, String category) {
+        super(name, value, category);
     }
 }

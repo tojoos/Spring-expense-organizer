@@ -16,6 +16,8 @@ import olszowka.expenseorganizer.services.OutcomeService;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Component
@@ -25,6 +27,8 @@ public class MainStageController implements Initializable {
     private final OutcomeService outcomeService;
     private final ObservableList<Outcome> outcomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Income> incomeObservableList = FXCollections.observableArrayList();
+    private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Other");
+    private final List<String> incomeListOfCategories = Arrays.asList("Primary Job", "Part Time Job", "Scholarship", "Investments");
 
     @FXML
     private TableView<Outcome> outcomeTableView;
@@ -42,13 +46,18 @@ public class MainStageController implements Initializable {
     private TableColumn<Income, Double> incomeValueColumn;
 
     @FXML
+    private TableColumn<Outcome, Double> outcomeCategoryColumn;
+    @FXML
+    private TableColumn<Income, Double> incomeCategoryColumn;
+
+    @FXML
     private Text outcomeTotalSumText, incomeTotalSumText;
 
     @FXML
     private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField;
 
     @FXML
-    private MenuButton outcomeCategoryMenuButton;
+    private ComboBox<String> outcomeCategoryComboBox, incomeCategoryComboBox;
 
     public MainStageController(IncomeService incomeService, OutcomeService outcomeService) {
         this.incomeService = incomeService;
@@ -59,6 +68,8 @@ public class MainStageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> updateOutcomeTotalSumTextField());
         incomeObservableList.addListener((ListChangeListener<Income>) change -> updateIncomeTotalSumTextField());
+        outcomeCategoryComboBox.getItems().addAll(outcomeListOfCategories);
+        incomeCategoryComboBox.getItems().addAll(incomeListOfCategories);
 
         initializeTableViews();
     }
@@ -66,9 +77,11 @@ public class MainStageController implements Initializable {
     private void initializeTableViews() {
         outcomeNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         outcomeValueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        outcomeCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         incomeNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         incomeValueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        incomeCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         incomeObservableList.addAll(incomeService.getAllPositions());
         outcomeObservableList.addAll(outcomeService.getAllPositions());
@@ -87,14 +100,14 @@ public class MainStageController implements Initializable {
 
     @FXML
     private void onOutcomeSubmitButtonClicked() {
-        outcomeService.getAllPositions().add(new Outcome(outcomeNameTextField.getText(), Double.parseDouble(outcomeValueTextField.getText())));
+        outcomeService.getAllPositions().add(new Outcome(outcomeNameTextField.getText(), Double.parseDouble(outcomeValueTextField.getText()), outcomeCategoryComboBox.getSelectionModel().getSelectedItem()));
         outcomeObservableList.clear();
         outcomeObservableList.addAll(outcomeService.getAllPositions());
     }
 
     @FXML
     private void onIncomeSubmitButtonClicked() {
-        incomeService.getAllPositions().add(new Income(incomeNameTextField.getText(), Double.parseDouble(incomeValueTextField.getText())));
+        incomeService.getAllPositions().add(new Income(incomeNameTextField.getText(), Double.parseDouble(incomeValueTextField.getText()), incomeCategoryComboBox.getSelectionModel().getSelectedItem()));
         incomeObservableList.clear();
         incomeObservableList.addAll(incomeService.getAllPositions());
     }
