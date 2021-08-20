@@ -11,8 +11,8 @@ import javafx.scene.text.Text;
 import net.rgielen.fxweaver.core.FxmlView;
 import olszowka.expenseorganizer.model.Income;
 import olszowka.expenseorganizer.model.Outcome;
-import olszowka.expenseorganizer.services.IncomeService;
-import olszowka.expenseorganizer.services.OutcomeService;
+import olszowka.expenseorganizer.model.Position;
+import olszowka.expenseorganizer.services.*;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 public class MainStageController implements Initializable {
     private final IncomeService incomeService;
     private final OutcomeService outcomeService;
+    private final ValidationService validationService;
     private final ObservableList<Outcome> outcomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Income> incomeObservableList = FXCollections.observableArrayList();
     private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Other");
@@ -51,7 +52,8 @@ public class MainStageController implements Initializable {
     private TableColumn<Income, Double> incomeCategoryColumn;
 
     @FXML
-    private Text outcomeTotalSumText, incomeTotalSumText;
+    private Text outcomeTotalSumText, incomeTotalSumText, outcomeSelectCategoryText, outcomeWrongValueText,
+            incomeSelectCategoryText, incomeWrongValueText;
 
     @FXML
     private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField;
@@ -59,17 +61,35 @@ public class MainStageController implements Initializable {
     @FXML
     private ComboBox<String> outcomeCategoryComboBox, incomeCategoryComboBox;
 
-    public MainStageController(IncomeService incomeService, OutcomeService outcomeService) {
+    public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService) {
         this.incomeService = incomeService;
         this.outcomeService = outcomeService;
+        this.validationService = validationService;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> updateOutcomeTotalSumTextField());
         incomeObservableList.addListener((ListChangeListener<Income>) change -> updateIncomeTotalSumTextField());
+
         outcomeCategoryComboBox.getItems().addAll(outcomeListOfCategories);
         incomeCategoryComboBox.getItems().addAll(incomeListOfCategories);
+
+        outcomeCategoryComboBox.getSelectionModel().selectedItemProperty().addListener(e -> {
+            if(outcomeCategoryComboBox.getSelectionModel().getSelectedIndex() > -1) {
+                outcomeSelectCategoryText.setVisible(false);
+            }
+        });
+        outcomeValueTextField.textProperty().addListener(e ->
+            outcomeWrongValueText.setVisible(!validationService.isValueValid(outcomeValueTextField.getText())));
+
+        incomeCategoryComboBox.getSelectionModel().selectedItemProperty().addListener(e -> {
+            if(incomeCategoryComboBox.getSelectionModel().getSelectedIndex() > -1) {
+                incomeSelectCategoryText.setVisible(false);
+            }
+        });
+        incomeValueTextField.textProperty().addListener(e ->
+               incomeWrongValueText.setVisible(!validationService.isValueValid(incomeValueTextField.getText())));
 
         initializeTableViews();
     }
@@ -100,15 +120,37 @@ public class MainStageController implements Initializable {
 
     @FXML
     private void onOutcomeSubmitButtonClicked() {
-        outcomeService.getAllPositions().add(new Outcome(outcomeNameTextField.getText(), Double.parseDouble(outcomeValueTextField.getText()), outcomeCategoryComboBox.getSelectionModel().getSelectedItem()));
-        outcomeObservableList.clear();
-        outcomeObservableList.addAll(outcomeService.getAllPositions());
+        if(validationService.isValueValid(outcomeValueTextField.getText())) {
+            if(isCategorySelected(outcomeCategoryComboBox)) {
+                outcomeService.getAllPositions().add(new Outcome(outcomeNameTextField.getText(), Double.parseDouble(outcomeValueTextField.getText()), outcomeCategoryComboBox.getSelectionModel().getSelectedItem()));
+                outcomeObservableList.clear();
+                outcomeObservableList.addAll(outcomeService.getAllPositions());
+                outcomeCategoryComboBox.getSelectionModel().clearSelection(); //not working properly
+                outcomeNameTextField.clear();
+                outcomeValueTextField.clear();
+            } else {
+                outcomeSelectCategoryText.setVisible(true);
+            }
+        }
     }
 
     @FXML
     private void onIncomeSubmitButtonClicked() {
-        incomeService.getAllPositions().add(new Income(incomeNameTextField.getText(), Double.parseDouble(incomeValueTextField.getText()), incomeCategoryComboBox.getSelectionModel().getSelectedItem()));
-        incomeObservableList.clear();
-        incomeObservableList.addAll(incomeService.getAllPositions());
+        if(validationService.isValueValid(incomeValueTextField.getText())) {
+            if(isCategorySelected(incomeCategoryComboBox)) {
+                incomeService.getAllPositions().add(new Income(incomeNameTextField.getText(), Double.parseDouble(incomeValueTextField.getText()), incomeCategoryComboBox.getSelectionModel().getSelectedItem()));
+                incomeObservableList.clear();
+                incomeObservableList.addAll(incomeService.getAllPositions());
+                incomeCategoryComboBox.getSelectionModel().clearSelection(); //not working properly
+                incomeNameTextField.clear();
+                incomeValueTextField.clear();
+            } else {
+                incomeSelectCategoryText.setVisible(true);
+            }
+        }
+    }
+
+    private boolean isCategorySelected(ComboBox<String> CategoryComboBox) {
+        return CategoryComboBox.getSelectionModel().getSelectedIndex() > -1;
     }
 }
