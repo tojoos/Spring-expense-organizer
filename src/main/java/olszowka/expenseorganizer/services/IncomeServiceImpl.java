@@ -28,7 +28,7 @@ public class IncomeServiceImpl extends PositionService<Income> implements Income
     }
 
     @Override
-    public double calculateTotalAmount() {
+    public String calculateTotalAmount() {
         return super.calculateTotalAmount();
     }
 }

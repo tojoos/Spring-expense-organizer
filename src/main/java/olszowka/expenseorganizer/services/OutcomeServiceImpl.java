@@ -28,7 +28,7 @@ public class OutcomeServiceImpl extends PositionService<Outcome> implements Outc
     }
 
     @Override
-    public double calculateTotalAmount() {
+    public String calculateTotalAmount() {
         return super.calculateTotalAmount();
     }
 }

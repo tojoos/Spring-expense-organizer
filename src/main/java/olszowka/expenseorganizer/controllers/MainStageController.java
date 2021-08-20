@@ -118,18 +118,20 @@ public class MainStageController implements Initializable {
     }
 
     private void updateOutcomeTotalSumTextField() {
-        outcomeTotalSumText.setText("-" + outcomeService.calculateTotalAmount() + " zł");
+        String totalValue = validationService.returnValidatedValue(outcomeService.calculateTotalAmount());
+        outcomeTotalSumText.setText("-" + totalValue + " zł");
     }
 
     private void updateIncomeTotalSumTextField() {
-        incomeTotalSumText.setText("+" + incomeService.calculateTotalAmount() + " zł");
+        String totalValue = validationService.returnValidatedValue(incomeService.calculateTotalAmount());
+        incomeTotalSumText.setText("+" + totalValue + " zł");
     }
 
     @FXML
     private void onOutcomeSubmitButtonClicked() {
         if(validationService.isValueValid(outcomeValueTextField.getText())) {
             if(isCategorySelected(outcomeCategoryComboBox)) {
-                outcomeService.getAllPositions().add(new Outcome(outcomeNameTextField.getText(), Double.parseDouble(outcomeValueTextField.getText()), outcomeCategoryComboBox.getSelectionModel().getSelectedItem()));
+                outcomeService.getAllPositions().add(new Outcome(outcomeNameTextField.getText(), validationService.returnValidatedValue(outcomeValueTextField.getText()), outcomeCategoryComboBox.getSelectionModel().getSelectedItem()));
                 outcomeObservableList.clear();
                 outcomeObservableList.addAll(outcomeService.getAllPositions());
                 outcomeCategoryComboBox.getSelectionModel().clearSelection(); //not working properly
@@ -145,7 +147,7 @@ public class MainStageController implements Initializable {
     private void onIncomeSubmitButtonClicked() {
         if(validationService.isValueValid(incomeValueTextField.getText())) {
             if(isCategorySelected(incomeCategoryComboBox)) {
-                incomeService.getAllPositions().add(new Income(incomeNameTextField.getText(), Double.parseDouble(incomeValueTextField.getText()), incomeCategoryComboBox.getSelectionModel().getSelectedItem()));
+                incomeService.getAllPositions().add(new Income(incomeNameTextField.getText(), validationService.returnValidatedValue(incomeValueTextField.getText()), incomeCategoryComboBox.getSelectionModel().getSelectedItem()));
                 incomeObservableList.clear();
                 incomeObservableList.addAll(incomeService.getAllPositions());
                 incomeCategoryComboBox.getSelectionModel().clearSelection(); //not working properly

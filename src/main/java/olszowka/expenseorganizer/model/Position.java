@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public abstract class Position {
     private String name;
-    private double value;
+    private String value;
     private String category;
     private LocalDate date;
 
@@ -12,7 +12,7 @@ public abstract class Position {
 
     }
 
-    public Position(String name, double value, String category) {
+    public Position(String name, String value, String category) {
         this.name = name;
         this.value = value;
         this.category = category;
@@ -43,11 +43,11 @@ public abstract class Position {
         this.name = name;
     }
 
-    public double getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(String value) {
         this.value = value;
     }
 }

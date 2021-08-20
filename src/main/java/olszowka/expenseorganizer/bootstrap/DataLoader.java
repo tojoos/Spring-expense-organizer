@@ -23,16 +23,16 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void loadData() {
-        Income income1 = new Income("Stypendium", 600.00, "Part Time Job");
+        Income income1 = new Income("Stypendium", "600.00", "Part Time Job");
         incomeService.addPosition(income1);
 
-        Income income2 = new Income("Praca", 120.00, "Primary Job");
+        Income income2 = new Income("Praca", "120.00", "Primary Job");
         incomeService.addPosition(income2);
 
-        Outcome outcome1 = new Outcome("Pizza", 23.00, "Food");
+        Outcome outcome1 = new Outcome("Pizza", "23.00", "Food");
         outcomeService.addPosition(outcome1);
 
-        Outcome outcome2 = new Outcome("Kebab", 12.50, "Food");
+        Outcome outcome2 = new Outcome("Kebab", "12.50", "Food");
         outcomeService.addPosition(outcome2);
     }
 }
