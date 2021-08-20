@@ -83,9 +83,10 @@
                         </TextField>
                         <TableView fx:id="outcomeTableView" layoutX="49.0" layoutY="126.0" prefHeight="439.0" prefWidth="372.0" style="-fx-background-color: #66CCCC;">
                           <columns>
-                            <TableColumn fx:id="outcomeNameColumn" editable="false" prefWidth="200.0" resizable="false" text="Name" />
-                            <TableColumn fx:id="outcomeValueColumn" editable="false" prefWidth="100.0" resizable="false" text="Value" />
-                              <TableColumn fx:id="outcomeCategoryColumn" editable="false" prefWidth="70.0" text="Category" />
+                            <TableColumn fx:id="outcomeNameColumn" editable="false" prefWidth="150.0" resizable="false" text="Name" />
+                            <TableColumn fx:id="outcomeValueColumn" editable="false" prefWidth="55.0" resizable="false" text="Value" />
+                              <TableColumn fx:id="outcomeCategoryColumn" editable="false" prefWidth="84.0" resizable="false" text="Category" />
+                              <TableColumn fx:id="outcomeDateColumn" prefWidth="82.0" resizable="false" text="Date" />
                           </columns>
                         </TableView>
                         <Group layoutX="641.0" layoutY="533.35498046875">
@@ -267,9 +268,10 @@
                         </Group>
                         <TableView fx:id="incomeTableView" layoutX="49.0" layoutY="126.0" prefHeight="439.0" prefWidth="372.0" style="-fx-background-color: #66CCCC;">
                            <columns>
-                              <TableColumn fx:id="incomeNameColumn" editable="false" prefWidth="200.0" resizable="false" text="Name" />
-                              <TableColumn fx:id="incomeValueColumn" editable="false" prefWidth="100.0" resizable="false" text="Value" />
-                              <TableColumn fx:id="incomeCategoryColumn" editable="false" prefWidth="70.0" text="Category" />
+                              <TableColumn fx:id="incomeNameColumn" editable="false" prefWidth="150.0" resizable="false" text="Name" />
+                              <TableColumn fx:id="incomeValueColumn" editable="false" prefWidth="55.0" resizable="false" text="Value" />
+                              <TableColumn fx:id="incomeCategoryColumn" editable="false" prefWidth="84.0" resizable="false" text="Category" />
+                              <TableColumn fx:id="incomeDateColumn" prefWidth="82.0" resizable="false" text="Date" />
                            </columns>
                         </TableView>
                         <Group layoutX="641.0" layoutY="533.35498046875">

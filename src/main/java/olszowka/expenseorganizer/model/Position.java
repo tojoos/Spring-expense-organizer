@@ -1,9 +1,12 @@
 package olszowka.expenseorganizer.model;
 
+import java.time.LocalDate;
+
 public abstract class Position {
     private String name;
     private double value;
     private String category;
+    private LocalDate date;
 
     public Position() {
 
@@ -13,6 +16,15 @@ public abstract class Position {
         this.name = name;
         this.value = value;
         this.category = category;
+        this.date = LocalDate.now();
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate localDate) {
+        this.date = localDate;
     }
 
     public String getCategory() {

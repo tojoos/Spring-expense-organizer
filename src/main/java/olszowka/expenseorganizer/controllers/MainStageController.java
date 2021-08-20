@@ -52,6 +52,11 @@ public class MainStageController implements Initializable {
     private TableColumn<Income, Double> incomeCategoryColumn;
 
     @FXML
+    private TableColumn<Outcome, Double> outcomeDateColumn;
+    @FXML
+    private TableColumn<Income, Double> incomeDateColumn;
+
+    @FXML
     private Text outcomeTotalSumText, incomeTotalSumText, outcomeSelectCategoryText, outcomeWrongValueText,
             incomeSelectCategoryText, incomeWrongValueText;
 
@@ -98,10 +103,12 @@ public class MainStageController implements Initializable {
         outcomeNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         outcomeValueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
         outcomeCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        outcomeDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         incomeNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         incomeValueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
         incomeCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        incomeDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         incomeObservableList.addAll(incomeService.getAllPositions());
         outcomeObservableList.addAll(outcomeService.getAllPositions());
