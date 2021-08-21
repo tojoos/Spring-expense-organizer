@@ -1,10 +1,12 @@
 package olszowka.expenseorganizer.controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
@@ -42,29 +44,32 @@ public class MainStageController implements Initializable {
     private TableColumn<Income, String> incomeNameColumn;
 
     @FXML
-    private TableColumn<Outcome, Double> outcomeValueColumn;
+    private TableColumn<Outcome, String> outcomeValueColumn;
     @FXML
-    private TableColumn<Income, Double> incomeValueColumn;
+    private TableColumn<Income, String> incomeValueColumn;
 
     @FXML
-    private TableColumn<Outcome, Double> outcomeCategoryColumn;
+    private TableColumn<Outcome, String> outcomeCategoryColumn;
     @FXML
-    private TableColumn<Income, Double> incomeCategoryColumn;
+    private TableColumn<Income, String> incomeCategoryColumn;
 
     @FXML
-    private TableColumn<Outcome, Double> outcomeDateColumn;
+    private TableColumn<Outcome, String> outcomeDateColumn;
     @FXML
-    private TableColumn<Income, Double> incomeDateColumn;
+    private TableColumn<Income, String> incomeDateColumn;
 
     @FXML
     private Text outcomeTotalSumText, incomeTotalSumText, outcomeSelectCategoryText, outcomeWrongValueText,
-            incomeSelectCategoryText, incomeWrongValueText;
+            incomeSelectCategoryText, incomeWrongValueText, incomeNameRequiredText, outcomeNameRequiredText;
 
     @FXML
     private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField;
 
     @FXML
     private ComboBox<String> outcomeCategoryComboBox, incomeCategoryComboBox;
+
+    @FXML
+    private PieChart outcomePieChart, incomePieChart;
 
     public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService) {
         this.incomeService = incomeService;
@@ -74,29 +79,71 @@ public class MainStageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> updateOutcomeTotalSumTextField());
-        incomeObservableList.addListener((ListChangeListener<Income>) change -> updateIncomeTotalSumTextField());
-
         outcomeCategoryComboBox.getItems().addAll(outcomeListOfCategories);
         incomeCategoryComboBox.getItems().addAll(incomeListOfCategories);
+
+        initializeListeners();
+        initializeTableViews();
+        updatePieCharts();
+    }
+
+    private void updatePieCharts() {
+        updatePieChart(outcomeListOfCategories, outcomeObservableList, outcomePieChart);
+        updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
+    }
+
+    private <T extends Position> void updatePieChart(List<String> listOfCategories, ObservableList<T> observableList, PieChart pieChart) {
+        ObservableList<PieChart.Data> PieDataChart = FXCollections.observableArrayList();
+        double []amounts = new double[listOfCategories.size()];
+        Arrays.fill(amounts,0);
+        for(T o : observableList) {
+            for(int i = 0 ; i < listOfCategories.size(); i++) {
+                if(o.getCategory().equals(listOfCategories.get(i))) {
+                    amounts[i] += Double.parseDouble(o.getValue());
+                    break;
+                }
+            }
+        }
+        for(int i = 0 ; i < listOfCategories.size() ; i++) {
+            if(amounts[i]>0)
+                PieDataChart.add(new PieChart.Data(listOfCategories.get(i),amounts[i]));
+        }
+        pieChart.setData(PieDataChart);
+    }
+
+    private void initializeListeners() {
+        outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> {
+            updateOutcomeTotalSumTextField();
+            updatePieCharts();
+        });
+        incomeObservableList.addListener((ListChangeListener<Income>) change -> {
+            updateIncomeTotalSumTextField();
+            updatePieCharts();
+        });
+
+        outcomeNameTextField.textProperty().addListener(e ->
+                outcomeNameRequiredText.setVisible(!validationService.isNameValid(outcomeNameTextField.getText())));
+
+        outcomeValueTextField.textProperty().addListener(e ->
+                outcomeWrongValueText.setVisible(!validationService.isValueValid(outcomeValueTextField.getText())));
 
         outcomeCategoryComboBox.getSelectionModel().selectedItemProperty().addListener(e -> {
             if(outcomeCategoryComboBox.getSelectionModel().getSelectedIndex() > -1) {
                 outcomeSelectCategoryText.setVisible(false);
             }
         });
-        outcomeValueTextField.textProperty().addListener(e ->
-            outcomeWrongValueText.setVisible(!validationService.isValueValid(outcomeValueTextField.getText())));
+
+        incomeNameTextField.textProperty().addListener(e ->
+                incomeNameRequiredText.setVisible(!validationService.isNameValid(incomeNameTextField.getText())));
+
+        incomeValueTextField.textProperty().addListener(e ->
+                incomeWrongValueText.setVisible(!validationService.isValueValid(incomeValueTextField.getText())));
 
         incomeCategoryComboBox.getSelectionModel().selectedItemProperty().addListener(e -> {
             if(incomeCategoryComboBox.getSelectionModel().getSelectedIndex() > -1) {
                 incomeSelectCategoryText.setVisible(false);
             }
         });
-        incomeValueTextField.textProperty().addListener(e ->
-               incomeWrongValueText.setVisible(!validationService.isValueValid(incomeValueTextField.getText())));
-
-        initializeTableViews();
     }
 
     private void initializeTableViews() {
@@ -118,48 +165,85 @@ public class MainStageController implements Initializable {
     }
 
     private void updateOutcomeTotalSumTextField() {
-        String totalValue = validationService.returnValidatedValue(outcomeService.calculateTotalAmount());
-        outcomeTotalSumText.setText("-" + totalValue + " zł");
+        String totalValue = validationService.returnFormattedValue(outcomeService.calculateTotalAmount());
+        Platform.runLater(() -> outcomeTotalSumText.setText("-" + totalValue + " zł"));
     }
 
     private void updateIncomeTotalSumTextField() {
-        String totalValue = validationService.returnValidatedValue(incomeService.calculateTotalAmount());
-        incomeTotalSumText.setText("+" + totalValue + " zł");
+        String totalValue = validationService.returnFormattedValue(incomeService.calculateTotalAmount());
+        Platform.runLater(() -> incomeTotalSumText.setText("+" + totalValue + " zł"));
+    }
+
+    private boolean isCategorySelected(ComboBox<String> CategoryComboBox) {
+        return CategoryComboBox.getSelectionModel().getSelectedIndex() > -1;
     }
 
     @FXML
     private void onOutcomeSubmitButtonClicked() {
-        if(validationService.isValueValid(outcomeValueTextField.getText())) {
-            if(isCategorySelected(outcomeCategoryComboBox)) {
-                outcomeService.getAllPositions().add(new Outcome(outcomeNameTextField.getText(), validationService.returnValidatedValue(outcomeValueTextField.getText()), outcomeCategoryComboBox.getSelectionModel().getSelectedItem()));
+        if(validationService.isNameValid(outcomeNameTextField.getText()) &&
+           validationService.isValueValid(outcomeValueTextField.getText()) &&
+           isCategorySelected(outcomeCategoryComboBox)) {
+                outcomeService.getAllPositions().add(
+                        new Outcome(
+                                outcomeNameTextField.getText(),
+                                validationService.returnFormattedValue(outcomeValueTextField.getText()),
+                                outcomeCategoryComboBox.getSelectionModel().getSelectedItem()));
                 outcomeObservableList.clear();
                 outcomeObservableList.addAll(outcomeService.getAllPositions());
                 outcomeCategoryComboBox.getSelectionModel().clearSelection(); //not working properly
                 outcomeNameTextField.clear();
                 outcomeValueTextField.clear();
-            } else {
-                outcomeSelectCategoryText.setVisible(true);
-            }
+
+            outcomeNameRequiredText.setVisible(false);
+            outcomeWrongValueText.setVisible(false);
+            outcomeSelectCategoryText.setVisible(false);
         }
+
+        if(!validationService.isNameValid(outcomeNameTextField.getText())) {
+            outcomeNameRequiredText.setVisible(true);
+        }
+
+        if(!validationService.isValueValid(outcomeValueTextField.getText())) {
+            outcomeWrongValueText.setVisible(true);
+        }
+
+        if(!isCategorySelected(outcomeCategoryComboBox)) {
+            outcomeSelectCategoryText.setVisible(true);
+        }
+
     }
 
     @FXML
     private void onIncomeSubmitButtonClicked() {
-        if(validationService.isValueValid(incomeValueTextField.getText())) {
-            if(isCategorySelected(incomeCategoryComboBox)) {
-                incomeService.getAllPositions().add(new Income(incomeNameTextField.getText(), validationService.returnValidatedValue(incomeValueTextField.getText()), incomeCategoryComboBox.getSelectionModel().getSelectedItem()));
+        if(validationService.isNameValid(incomeNameTextField.getText()) &&
+           validationService.isValueValid(incomeValueTextField.getText()) &&
+           isCategorySelected(incomeCategoryComboBox)) {
+                incomeService.getAllPositions().add(
+                        new Income(
+                                incomeNameTextField.getText(),
+                                validationService.returnFormattedValue(incomeValueTextField.getText()),
+                                incomeCategoryComboBox.getSelectionModel().getSelectedItem()));
                 incomeObservableList.clear();
                 incomeObservableList.addAll(incomeService.getAllPositions());
                 incomeCategoryComboBox.getSelectionModel().clearSelection(); //not working properly
                 incomeNameTextField.clear();
                 incomeValueTextField.clear();
-            } else {
-                incomeSelectCategoryText.setVisible(true);
-            }
-        }
-    }
 
-    private boolean isCategorySelected(ComboBox<String> CategoryComboBox) {
-        return CategoryComboBox.getSelectionModel().getSelectedIndex() > -1;
+            incomeNameRequiredText.setVisible(false);
+            incomeWrongValueText.setVisible(false);
+            incomeSelectCategoryText.setVisible(false);
+        }
+
+        if(!validationService.isNameValid(incomeNameTextField.getText())) {
+            incomeNameRequiredText.setVisible(true);
+        }
+
+        if(!validationService.isValueValid(incomeValueTextField.getText())) {
+            incomeWrongValueText.setVisible(true);
+        }
+
+        if(!isCategorySelected(incomeCategoryComboBox)) {
+            incomeSelectCategoryText.setVisible(true);
+        }
     }
 }

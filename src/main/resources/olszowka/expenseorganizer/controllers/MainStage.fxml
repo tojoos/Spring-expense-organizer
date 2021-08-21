@@ -63,7 +63,7 @@
                         </Group>
                         <Group layoutX="491.0" layoutY="70.0">
                            <children>
-                              <PieChart layoutY="31.0" legendVisible="false" prefHeight="380.0" prefWidth="729.0" />
+                              <PieChart fx:id="outcomePieChart" layoutY="31.0" legendVisible="false" prefHeight="380.0" prefWidth="729.0" />
                               <Text fill="WHITE" layoutX="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Breakdown of expenses" textAlignment="CENTER" wrappingWidth="424.392578125">
                                  <font>
                                     <Font name="Rockwell" size="25.0" />
@@ -173,6 +173,11 @@
                               <Font name="Rockwell" size="12.0" />
                            </font>
                         </Text>
+                        <Text fx:id="outcomeNameRequiredText" fill="RED" layoutX="73.0" layoutY="682.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name required" visible="false">
+                           <font>
+                              <Font name="Rockwell" size="13.0" />
+                           </font>
+                        </Text>
                      </children></AnchorPane>
                </content></Tab>
             <Tab text="Incomes">
@@ -238,7 +243,7 @@
                         </Group>
                         <Group layoutX="491.0" layoutY="70.0">
                            <children>
-                              <PieChart layoutY="31.0" legendVisible="false" prefHeight="380.0" prefWidth="729.0" />
+                              <PieChart fx:id="incomePieChart" layoutY="31.0" legendVisible="false" prefHeight="380.0" prefWidth="729.0" />
                               <Text fill="WHITE" layoutX="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Breakdown of incomes" textAlignment="CENTER" wrappingWidth="424.392578125">
                                  <font>
                                     <Font name="Rockwell" size="25.0" />
@@ -321,6 +326,11 @@
                         <Text fx:id="incomeWrongValueText" fill="RED" layoutX="228.0" layoutY="682.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wrong value" visible="false">
                            <font>
                               <Font name="Rockwell" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="incomeNameRequiredText" fill="RED" layoutX="72.0" layoutY="682.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name required" visible="false">
+                           <font>
+                              <Font name="Rockwell" size="13.0" />
                            </font>
                         </Text>
                      </children>
