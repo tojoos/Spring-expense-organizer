@@ -114,35 +114,35 @@ public class MainStageController implements Initializable {
     private void initializeListeners() {
         outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> {
             updateOutcomeTotalSumTextField();
-            updatePieCharts();
+            updatePieChart(outcomeListOfCategories, outcomeObservableList, outcomePieChart);
         });
         incomeObservableList.addListener((ListChangeListener<Income>) change -> {
             updateIncomeTotalSumTextField();
-            updatePieCharts();
+            updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
         });
 
-        outcomeNameTextField.textProperty().addListener(e ->
-                outcomeNameRequiredText.setVisible(!validationService.isNameValid(outcomeNameTextField.getText())));
+        initializeListener(incomeNameTextField, incomeNameRequiredText, incomeValueTextField, incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText);
+        initializeListener(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField, outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText);
+    }
 
-        outcomeValueTextField.textProperty().addListener(e ->
-                outcomeWrongValueText.setVisible(!validationService.isValueValid(outcomeValueTextField.getText())));
+    private <T extends Position> void initializeListener(TextField NameTextField,
+                                    Text NameRequiredText,
+                                    TextField ValueTextField,
+                                    Text WrongValueText,
+                                    ComboBox<String> CategoryComboBox,
+                                    Text SelectCategoryText) {
 
-        outcomeCategoryComboBox.getSelectionModel().selectedItemProperty().addListener(e -> {
-            if(outcomeCategoryComboBox.getSelectionModel().getSelectedIndex() > -1) {
-                outcomeSelectCategoryText.setVisible(false);
+        NameTextField.textProperty().addListener(e ->
+                NameRequiredText.setVisible(!validationService.isNameValid(NameTextField.getText())));
+
+        ValueTextField.textProperty().addListener(e ->
+                WrongValueText.setVisible(!validationService.isValueValid(ValueTextField.getText())));
+
+        CategoryComboBox.getSelectionModel().selectedItemProperty().addListener(e -> {
+            if(CategoryComboBox.getSelectionModel().getSelectedIndex() > -1) {
+                SelectCategoryText.setVisible(false);
             }
-        });
 
-        incomeNameTextField.textProperty().addListener(e ->
-                incomeNameRequiredText.setVisible(!validationService.isNameValid(incomeNameTextField.getText())));
-
-        incomeValueTextField.textProperty().addListener(e ->
-                incomeWrongValueText.setVisible(!validationService.isValueValid(incomeValueTextField.getText())));
-
-        incomeCategoryComboBox.getSelectionModel().selectedItemProperty().addListener(e -> {
-            if(incomeCategoryComboBox.getSelectionModel().getSelectedIndex() > -1) {
-                incomeSelectCategoryText.setVisible(false);
-            }
         });
     }
 
