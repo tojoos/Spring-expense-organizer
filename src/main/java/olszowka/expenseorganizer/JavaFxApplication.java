@@ -35,6 +35,7 @@ public class JavaFxApplication extends Application {
         Parent root = fxWeaver.loadView(MainStageController.class);
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image(String.valueOf(getClass().getClassLoader().getResource("icon\\icon.png"))));
+        stage.setResizable(false);
         stage.setTitle("Expense Organizer");
         stage.setScene(scene);
         stage.show();
