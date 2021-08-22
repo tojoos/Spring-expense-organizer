@@ -199,6 +199,7 @@ public class MainStageController implements Initializable {
             outcomeWrongValueText.setVisible(false);
             outcomeSelectCategoryText.setVisible(false);
             wasSubmitted = true;
+            outcomeTableView.sort();
         }
 
         if(!wasSubmitted) {
@@ -248,6 +249,7 @@ public class MainStageController implements Initializable {
             incomeWrongValueText.setVisible(false);
             incomeSelectCategoryText.setVisible(false);
             wasSubmitted = true;
+            incomeTableView.sort();
         }
 
         if(!wasSubmitted) {
