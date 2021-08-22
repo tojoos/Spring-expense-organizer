@@ -108,9 +108,10 @@ public class MainStageController implements Initializable {
             updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
         });
 
-
-        initializeListener(incomeNameTextField, incomeNameRequiredText, incomeValueTextField, incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText, incomeCategoryText);
-        initializeListener(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField, outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText, outcomeCategoryText);
+        initializeListener(incomeNameTextField, incomeNameRequiredText, incomeValueTextField,
+                           incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText, incomeCategoryText);
+        initializeListener(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField,
+                           outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText, outcomeCategoryText);
     }
 
     private void initializeListener(TextField NameTextField,
@@ -193,7 +194,8 @@ public class MainStageController implements Initializable {
         }
 
         if(!wasSubmitted) {
-            validAllMessagesUnderFields(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField, outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText);
+            validAllMessagesUnderFields(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField,
+                                        outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText);
         }
     }
 
@@ -241,7 +243,8 @@ public class MainStageController implements Initializable {
         }
 
         if(!wasSubmitted) {
-            validAllMessagesUnderFields(incomeNameTextField, incomeNameRequiredText, incomeValueTextField, incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText);
+            validAllMessagesUnderFields(incomeNameTextField, incomeNameRequiredText, incomeValueTextField,
+                                        incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText);
         }
     }
 }

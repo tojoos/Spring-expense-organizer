@@ -19,6 +19,13 @@ public abstract class Position {
         this.date = LocalDate.now();
     }
 
+    public Position(String name, String value, String category, LocalDate date) {
+        this.name = name;
+        this.value = value;
+        this.category = category;
+        this.date = date;
+    }
+
     public LocalDate getDate() {
         return date;
     }
