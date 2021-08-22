@@ -154,6 +154,14 @@ public class MainStageController implements Initializable {
 
         outcomeTableView.setItems(outcomeObservableList);
         incomeTableView.setItems(incomeObservableList);
+
+        initializeTableViewSort(incomeDateColumn, incomeTableView);
+        initializeTableViewSort(outcomeDateColumn, outcomeTableView);
+    }
+
+    private <T extends Position> void initializeTableViewSort(TableColumn<T, String> sortedTableColumn, TableView<T> tableView) {
+        sortedTableColumn.setSortType(TableColumn.SortType.DESCENDING);
+        tableView.getSortOrder().add(sortedTableColumn);
     }
 
     private void updateOutcomeTotalSumTextField() {
