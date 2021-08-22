@@ -39,24 +39,10 @@ public class MainStageController implements Initializable {
     private TableView<Income> incomeTableView;
 
     @FXML
-    private TableColumn<Outcome, String> outcomeNameColumn;
-    @FXML
-    private TableColumn<Income, String> incomeNameColumn;
+    private TableColumn<Outcome, String> outcomeNameColumn, outcomeValueColumn, outcomeCategoryColumn, outcomeDateColumn;
 
     @FXML
-    private TableColumn<Outcome, String> outcomeValueColumn;
-    @FXML
-    private TableColumn<Income, String> incomeValueColumn;
-
-    @FXML
-    private TableColumn<Outcome, String> outcomeCategoryColumn;
-    @FXML
-    private TableColumn<Income, String> incomeCategoryColumn;
-
-    @FXML
-    private TableColumn<Outcome, String> outcomeDateColumn;
-    @FXML
-    private TableColumn<Income, String> incomeDateColumn;
+    private TableColumn<Income, String> incomeNameColumn, incomeValueColumn, incomeCategoryColumn, incomeDateColumn;
 
     @FXML
     private Text outcomeTotalSumText, incomeTotalSumText, outcomeSelectCategoryText, outcomeWrongValueText,
@@ -125,7 +111,7 @@ public class MainStageController implements Initializable {
         initializeListener(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField, outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText);
     }
 
-    private <T extends Position> void initializeListener(TextField NameTextField,
+    private void initializeListener(TextField NameTextField,
                                     Text NameRequiredText,
                                     TextField ValueTextField,
                                     Text WrongValueText,
@@ -180,6 +166,7 @@ public class MainStageController implements Initializable {
 
     @FXML
     private void onOutcomeSubmitButtonClicked() {
+        boolean wasSubmitted = false;
         if(validationService.isNameValid(outcomeNameTextField.getText()) &&
            validationService.isValueValid(outcomeValueTextField.getText()) &&
            isCategorySelected(outcomeCategoryComboBox)) {
@@ -197,24 +184,27 @@ public class MainStageController implements Initializable {
             outcomeNameRequiredText.setVisible(false);
             outcomeWrongValueText.setVisible(false);
             outcomeSelectCategoryText.setVisible(false);
+            wasSubmitted = true;
         }
 
-        if(!validationService.isNameValid(outcomeNameTextField.getText())) {
-            outcomeNameRequiredText.setVisible(true);
-        }
+        if(!wasSubmitted) {
+            if (!validationService.isNameValid(outcomeNameTextField.getText())) {
+                outcomeNameRequiredText.setVisible(true);
+            }
 
-        if(!validationService.isValueValid(outcomeValueTextField.getText())) {
-            outcomeWrongValueText.setVisible(true);
-        }
+            if (!validationService.isValueValid(outcomeValueTextField.getText())) {
+                outcomeWrongValueText.setVisible(true);
+            }
 
-        if(!isCategorySelected(outcomeCategoryComboBox)) {
-            outcomeSelectCategoryText.setVisible(true);
+            if (!isCategorySelected(outcomeCategoryComboBox)) {
+                outcomeSelectCategoryText.setVisible(true);
+            }
         }
-
     }
 
     @FXML
     private void onIncomeSubmitButtonClicked() {
+        boolean wasSubmitted = false;
         if(validationService.isNameValid(incomeNameTextField.getText()) &&
            validationService.isValueValid(incomeValueTextField.getText()) &&
            isCategorySelected(incomeCategoryComboBox)) {
@@ -232,18 +222,21 @@ public class MainStageController implements Initializable {
             incomeNameRequiredText.setVisible(false);
             incomeWrongValueText.setVisible(false);
             incomeSelectCategoryText.setVisible(false);
+            wasSubmitted = true;
         }
 
-        if(!validationService.isNameValid(incomeNameTextField.getText())) {
-            incomeNameRequiredText.setVisible(true);
-        }
+        if(!wasSubmitted) {
+            if (!validationService.isNameValid(incomeNameTextField.getText())) {
+                incomeNameRequiredText.setVisible(true);
+            }
 
-        if(!validationService.isValueValid(incomeValueTextField.getText())) {
-            incomeWrongValueText.setVisible(true);
-        }
+            if (!validationService.isValueValid(incomeValueTextField.getText())) {
+                incomeWrongValueText.setVisible(true);
+            }
 
-        if(!isCategorySelected(incomeCategoryComboBox)) {
-            incomeSelectCategoryText.setVisible(true);
+            if (!isCategorySelected(incomeCategoryComboBox)) {
+                incomeSelectCategoryText.setVisible(true);
+            }
         }
     }
 }
