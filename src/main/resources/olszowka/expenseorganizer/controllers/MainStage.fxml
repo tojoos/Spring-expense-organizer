@@ -178,6 +178,7 @@
                               <Font name="Rockwell" size="13.0" />
                            </font>
                         </Text>
+                        <Text fx:id="outcomeCategoryText" layoutX="348.0" layoutY="658.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Category" visible="false" />
                      </children></AnchorPane>
                </content></Tab>
             <Tab text="Incomes">
@@ -333,6 +334,7 @@
                               <Font name="Rockwell" size="13.0" />
                            </font>
                         </Text>
+                        <Text fx:id="incomeCategoryText" layoutX="348.0" layoutY="658.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Category" visible="false" />
                      </children>
                   </AnchorPane>
                </content>

@@ -46,7 +46,8 @@ public class MainStageController implements Initializable {
 
     @FXML
     private Text outcomeTotalSumText, incomeTotalSumText, outcomeSelectCategoryText, outcomeWrongValueText,
-            incomeSelectCategoryText, incomeWrongValueText, incomeNameRequiredText, outcomeNameRequiredText;
+            incomeSelectCategoryText, incomeWrongValueText, incomeNameRequiredText, outcomeNameRequiredText,
+            outcomeCategoryText, incomeCategoryText;
 
     @FXML
     private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField;
@@ -107,8 +108,9 @@ public class MainStageController implements Initializable {
             updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
         });
 
-        initializeListener(incomeNameTextField, incomeNameRequiredText, incomeValueTextField, incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText);
-        initializeListener(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField, outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText);
+
+        initializeListener(incomeNameTextField, incomeNameRequiredText, incomeValueTextField, incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText, incomeCategoryText);
+        initializeListener(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField, outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText, outcomeCategoryText);
     }
 
     private void initializeListener(TextField NameTextField,
@@ -116,7 +118,8 @@ public class MainStageController implements Initializable {
                                     TextField ValueTextField,
                                     Text WrongValueText,
                                     ComboBox<String> CategoryComboBox,
-                                    Text SelectCategoryText) {
+                                    Text SelectCategoryText,
+                                    Text categoryText) {
 
         NameTextField.textProperty().addListener(e ->
                 NameRequiredText.setVisible(!validationService.isNameValid(NameTextField.getText())));
@@ -127,8 +130,10 @@ public class MainStageController implements Initializable {
         CategoryComboBox.getSelectionModel().selectedItemProperty().addListener(e -> {
             if(CategoryComboBox.getSelectionModel().getSelectedIndex() > -1) {
                 SelectCategoryText.setVisible(false);
+                categoryText.setVisible(false);
+            } else {
+                categoryText.setVisible(true);
             }
-
         });
     }
 
@@ -188,17 +193,27 @@ public class MainStageController implements Initializable {
         }
 
         if(!wasSubmitted) {
-            if (!validationService.isNameValid(outcomeNameTextField.getText())) {
-                outcomeNameRequiredText.setVisible(true);
-            }
+            validAllMessagesUnderFields(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField, outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText);
+        }
+    }
 
-            if (!validationService.isValueValid(outcomeValueTextField.getText())) {
-                outcomeWrongValueText.setVisible(true);
-            }
+    private void validAllMessagesUnderFields(TextField nameTextField,
+                                             Text nameRequiredText,
+                                             TextField valueTextField,
+                                             Text wrongValueText,
+                                             ComboBox<String> categoryComboBox,
+                                             Text selectCategoryText) {
 
-            if (!isCategorySelected(outcomeCategoryComboBox)) {
-                outcomeSelectCategoryText.setVisible(true);
-            }
+        if (!validationService.isNameValid(nameTextField.getText())) {
+            nameRequiredText.setVisible(true);
+        }
+
+        if (!validationService.isValueValid(valueTextField.getText())) {
+            wrongValueText.setVisible(true);
+        }
+
+        if (!isCategorySelected(categoryComboBox)) {
+            selectCategoryText.setVisible(true);
         }
     }
 
@@ -226,17 +241,7 @@ public class MainStageController implements Initializable {
         }
 
         if(!wasSubmitted) {
-            if (!validationService.isNameValid(incomeNameTextField.getText())) {
-                incomeNameRequiredText.setVisible(true);
-            }
-
-            if (!validationService.isValueValid(incomeValueTextField.getText())) {
-                incomeWrongValueText.setVisible(true);
-            }
-
-            if (!isCategorySelected(incomeCategoryComboBox)) {
-                incomeSelectCategoryText.setVisible(true);
-            }
+            validAllMessagesUnderFields(incomeNameTextField, incomeNameRequiredText, incomeValueTextField, incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText);
         }
     }
 }
