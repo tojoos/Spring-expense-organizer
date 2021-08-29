@@ -30,7 +30,7 @@ public class MainStageController implements Initializable {
     private final ValidationService validationService;
     private final ObservableList<Outcome> outcomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Income> incomeObservableList = FXCollections.observableArrayList();
-    private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Other");
+    private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Traveling", "Other");
     private final List<String> incomeListOfCategories = Arrays.asList("Primary Job", "Part Time Job", "Scholarship", "Investments");
 
     @FXML
@@ -178,6 +178,26 @@ public class MainStageController implements Initializable {
         return CategoryComboBox.getSelectionModel().getSelectedIndex() > -1;
     }
 
+    private void validAllMessagesUnderFields(TextField nameTextField,
+                                             Text nameRequiredText,
+                                             TextField valueTextField,
+                                             Text wrongValueText,
+                                             ComboBox<String> categoryComboBox,
+                                             Text selectCategoryText) {
+
+        if (!validationService.isNameValid(nameTextField.getText())) {
+            nameRequiredText.setVisible(true);
+        }
+
+        if (!validationService.isValueValid(valueTextField.getText())) {
+            wrongValueText.setVisible(true);
+        }
+
+        if (!isCategorySelected(categoryComboBox)) {
+            selectCategoryText.setVisible(true);
+        }
+    }
+
     @FXML
     private void onOutcomeSubmitButtonClicked() {
         boolean wasSubmitted = false;
@@ -205,26 +225,6 @@ public class MainStageController implements Initializable {
         if(!wasSubmitted) {
             validAllMessagesUnderFields(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField,
                                         outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText);
-        }
-    }
-
-    private void validAllMessagesUnderFields(TextField nameTextField,
-                                             Text nameRequiredText,
-                                             TextField valueTextField,
-                                             Text wrongValueText,
-                                             ComboBox<String> categoryComboBox,
-                                             Text selectCategoryText) {
-
-        if (!validationService.isNameValid(nameTextField.getText())) {
-            nameRequiredText.setVisible(true);
-        }
-
-        if (!validationService.isValueValid(valueTextField.getText())) {
-            wrongValueText.setVisible(true);
-        }
-
-        if (!isCategorySelected(categoryComboBox)) {
-            selectCategoryText.setVisible(true);
         }
     }
 
