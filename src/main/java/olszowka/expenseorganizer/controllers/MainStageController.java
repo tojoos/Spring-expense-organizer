@@ -15,8 +15,10 @@ import olszowka.expenseorganizer.model.Income;
 import olszowka.expenseorganizer.model.Outcome;
 import olszowka.expenseorganizer.model.Position;
 import olszowka.expenseorganizer.services.*;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +34,8 @@ public class MainStageController implements Initializable {
     private final ObservableList<Income> incomeObservableList = FXCollections.observableArrayList();
     private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Traveling", "Other");
     private final List<String> incomeListOfCategories = Arrays.asList("Primary Job", "Part Time Job", "Scholarship", "Investments");
+
+    private final DataController dataController;
 
     @FXML
     private TableView<Outcome> outcomeTableView;
@@ -58,10 +62,11 @@ public class MainStageController implements Initializable {
     @FXML
     private PieChart outcomePieChart, incomePieChart;
 
-    public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService) {
+    public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService, JSONParserService jsonParserService) throws IOException, ParseException {
         this.incomeService = incomeService;
         this.outcomeService = outcomeService;
         this.validationService = validationService;
+        this.dataController = new DataController(jsonParserService);
     }
 
     @Override
@@ -69,9 +74,34 @@ public class MainStageController implements Initializable {
         outcomeCategoryComboBox.getItems().addAll(outcomeListOfCategories);
         incomeCategoryComboBox.getItems().addAll(incomeListOfCategories);
 
+        try {
+            updateIncomesDataFiles();
+            updateOutcomesDataFiles();
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
         initializeListeners();
         initializeTableViews();
         updatePieCharts();
+    }
+
+    private void saveIncomesDataFiles() {
+        dataController.saveIncomes(incomeService.getAllPositions());
+    }
+
+    private void saveOutcomesDataFiles() {
+        dataController.saveOutcomes(outcomeService.getAllPositions());
+    }
+
+    private void updateIncomesDataFiles() throws IOException, ParseException {
+        incomeService.clearAllPositions();
+        dataController.getIncomes().forEach(incomeService::addPosition);
+    }
+
+    private void updateOutcomesDataFiles() throws IOException, ParseException {
+        outcomeService.clearAllPositions();
+        dataController.getOutcomes().forEach(outcomeService::addPosition);
     }
 
     private void updatePieCharts() {
@@ -100,10 +130,12 @@ public class MainStageController implements Initializable {
 
     private void initializeListeners() {
         outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> {
+            saveOutcomesDataFiles();
             updateOutcomeTotalSumTextField();
             updatePieChart(outcomeListOfCategories, outcomeObservableList, outcomePieChart);
         });
         incomeObservableList.addListener((ListChangeListener<Income>) change -> {
+            saveIncomesDataFiles();
             updateIncomeTotalSumTextField();
             updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
         });

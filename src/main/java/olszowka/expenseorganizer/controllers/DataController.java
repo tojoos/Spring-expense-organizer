@@ -1,17 +1,40 @@
 package olszowka.expenseorganizer.controllers;
 
+import olszowka.expenseorganizer.model.Income;
+import olszowka.expenseorganizer.model.Outcome;
+import olszowka.expenseorganizer.services.JSONParserService;
+import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Component;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+@Component
 public class DataController {
     private File incomesFile;
     private File outcomesFile;
     private File directory;
 
-    public DataController() throws IOException {
+    private final List<Income> incomes;
+    private final List<Outcome> outcomes;
+
+    private final JSONParserService jsonParserService;
+
+    public DataController(JSONParserService jsonParserService) throws IOException, ParseException {
+        this.jsonParserService = jsonParserService;
         initializeFiles();
+        incomes = jsonParserService.readJsonIncomes(incomesFile);
+        outcomes = jsonParserService.readJsonOutcomes(outcomesFile);
     }
 
+    public void saveIncomes(List<Income> incomes) {
+        jsonParserService.saveJsonIncomes(incomes, incomesFile);
+    }
+
+    public void saveOutcomes(List<Outcome> outcomes) {
+        jsonParserService.saveJsonOutcomes(outcomes, outcomesFile);
+    }
 
     private void initializeFiles() throws IOException {
         this.directory = new File("src/main/resources/data/json");
@@ -46,5 +69,11 @@ public class DataController {
         }
     }
 
+    public List<Income> getIncomes() throws IOException, ParseException {
+        return  jsonParserService.readJsonIncomes(incomesFile);
+    }
 
+    public List<Outcome> getOutcomes() throws IOException, ParseException {
+        return  jsonParserService.readJsonOutcomes(outcomesFile);
+    }
 }
