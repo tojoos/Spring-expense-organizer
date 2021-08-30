@@ -10,6 +10,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
 import olszowka.expenseorganizer.model.Income;
 import olszowka.expenseorganizer.model.Outcome;
@@ -33,7 +34,7 @@ public class MainStageController implements Initializable {
     private final ObservableList<Outcome> outcomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Income> incomeObservableList = FXCollections.observableArrayList();
     private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Traveling", "Other");
-    private final List<String> incomeListOfCategories = Arrays.asList("Primary Job", "Part Time Job", "Scholarship", "Investments");
+    private final List<String> incomeListOfCategories = Arrays.asList("Primary Job", "Part Time Job", "Scholarship", "Investments", "Cashback");
 
     private final DataController dataController;
 
@@ -129,30 +130,36 @@ public class MainStageController implements Initializable {
     }
 
     private void initializeListeners() {
-        outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> {
+        Platform.runLater(() -> outcomeNameRequiredText.getScene().getWindow().setOnCloseRequest(e -> {
             saveOutcomesDataFiles();
+            saveIncomesDataFiles();
+            Platform.exit();
+            System.exit(0);
+        }));
+
+
+        outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> {
             updateOutcomeTotalSumTextField();
             updatePieChart(outcomeListOfCategories, outcomeObservableList, outcomePieChart);
         });
         incomeObservableList.addListener((ListChangeListener<Income>) change -> {
-            saveIncomesDataFiles();
             updateIncomeTotalSumTextField();
             updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
         });
 
-        initializeListener(incomeNameTextField, incomeNameRequiredText, incomeValueTextField,
+        initializeTextFieldsListeners(incomeNameTextField, incomeNameRequiredText, incomeValueTextField,
                            incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText, incomeCategoryText);
-        initializeListener(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField,
+        initializeTextFieldsListeners(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField,
                            outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText, outcomeCategoryText);
     }
 
-    private void initializeListener(TextField NameTextField,
-                                    Text NameRequiredText,
-                                    TextField ValueTextField,
-                                    Text WrongValueText,
-                                    ComboBox<String> CategoryComboBox,
-                                    Text SelectCategoryText,
-                                    Text categoryText) {
+    private void initializeTextFieldsListeners(TextField NameTextField,
+                                               Text NameRequiredText,
+                                               TextField ValueTextField,
+                                               Text WrongValueText,
+                                               ComboBox<String> CategoryComboBox,
+                                               Text SelectCategoryText,
+                                               Text categoryText) {
 
         NameTextField.textProperty().addListener(e ->
                 NameRequiredText.setVisible(!validationService.isNameValid(NameTextField.getText())));
@@ -243,7 +250,7 @@ public class MainStageController implements Initializable {
                                 outcomeCategoryComboBox.getSelectionModel().getSelectedItem()));
                 outcomeObservableList.clear();
                 outcomeObservableList.addAll(outcomeService.getAllPositions());
-                outcomeCategoryComboBox.getSelectionModel().clearSelection(); //not working properly
+                outcomeCategoryComboBox.getSelectionModel().clearSelection();
                 outcomeNameTextField.clear();
                 outcomeValueTextField.clear();
 
@@ -273,7 +280,7 @@ public class MainStageController implements Initializable {
                                 incomeCategoryComboBox.getSelectionModel().getSelectedItem()));
                 incomeObservableList.clear();
                 incomeObservableList.addAll(incomeService.getAllPositions());
-                incomeCategoryComboBox.getSelectionModel().clearSelection(); //not working properly
+                incomeCategoryComboBox.getSelectionModel().clearSelection();
                 incomeNameTextField.clear();
                 incomeValueTextField.clear();
 
@@ -287,6 +294,26 @@ public class MainStageController implements Initializable {
         if(!wasSubmitted) {
             validAllMessagesUnderFields(incomeNameTextField, incomeNameRequiredText, incomeValueTextField,
                                         incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText);
+        }
+    }
+
+    @FXML
+    private void onOutcomeDeleteButtonClicked() {
+        if(outcomeTableView.getSelectionModel().getSelectedIndex() > -1) {
+            outcomeService.getAllPositions().remove(outcomeTableView.getSelectionModel().getSelectedItem());
+            outcomeObservableList.remove(outcomeTableView.getSelectionModel().getSelectedItem());
+        } else {
+            //please select position message to do
+        }
+    }
+
+    @FXML
+    private void onIncomeDeleteButtonClicked() {
+        if(incomeTableView.getSelectionModel().getSelectedIndex() > -1) {
+            incomeService.getAllPositions().remove(incomeTableView.getSelectionModel().getSelectedItem());
+            incomeObservableList.remove(incomeTableView.getSelectionModel().getSelectedItem());
+        } else {
+            //please select position message to do
         }
     }
 }
