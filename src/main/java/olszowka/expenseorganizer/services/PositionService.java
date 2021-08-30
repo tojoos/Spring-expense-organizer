@@ -2,13 +2,15 @@ package olszowka.expenseorganizer.services;
 
 import olszowka.expenseorganizer.model.Position;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public abstract class PositionService<T extends Position> {
-    protected Set<T> positions = new HashSet<>();
+    protected List<T> positions = new ArrayList<>();
 
-    Set<T> getAllPositions() {
+    List<T> getAllPositions() {
         return positions;
     }
 

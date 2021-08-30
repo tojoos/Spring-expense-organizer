@@ -2,10 +2,10 @@ package olszowka.expenseorganizer.services;
 
 import olszowka.expenseorganizer.model.Position;
 
-import java.util.Set;
+import java.util.List;
 
 public interface CrudService<T extends Position> {
-    Set<T> getAllPositions();
+    List<T> getAllPositions();
 
     void addPosition(T position);
 
