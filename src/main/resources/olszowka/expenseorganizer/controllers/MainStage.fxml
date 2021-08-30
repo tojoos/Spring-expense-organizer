@@ -243,6 +243,11 @@
                               <Font name="Rockwell" size="13.0" />
                            </font>
                         </Button>
+                        <Text fx:id="outcomeSelectPositionText" fill="RED" layoutX="430.0" layoutY="581.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select position" textAlignment="CENTER" visible="false" wrappingWidth="101.0341796875">
+                           <font>
+                              <Font name="Rockwell" size="14.0" />
+                           </font>
+                        </Text>
                      </children></AnchorPane>
                </content></Tab>
             <Tab text="Incomes">
@@ -404,6 +409,11 @@
                               <Font name="Rockwell" size="13.0" />
                            </font>
                         </Button>
+                        <Text fx:id="incomeSelectPositionText" fill="RED" layoutX="430.0" layoutY="581.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select position" textAlignment="CENTER" visible="false" wrappingWidth="101.0341796875">
+                           <font>
+                              <Font name="Rockwell" size="14.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
                </content>

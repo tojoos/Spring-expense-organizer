@@ -52,7 +52,7 @@ public class MainStageController implements Initializable {
     @FXML
     private Text outcomeTotalSumText, incomeTotalSumText, outcomeSelectCategoryText, outcomeWrongValueText,
             incomeSelectCategoryText, incomeWrongValueText, incomeNameRequiredText, outcomeNameRequiredText,
-            outcomeCategoryText, incomeCategoryText;
+            outcomeCategoryText, incomeCategoryText, outcomeSelectPositionText, incomeSelectPositionText;
 
     @FXML
     private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField;
@@ -136,7 +136,6 @@ public class MainStageController implements Initializable {
             Platform.exit();
             System.exit(0);
         }));
-
 
         outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> {
             updateOutcomeTotalSumTextField();
@@ -302,8 +301,9 @@ public class MainStageController implements Initializable {
         if(outcomeTableView.getSelectionModel().getSelectedIndex() > -1) {
             outcomeService.getAllPositions().remove(outcomeTableView.getSelectionModel().getSelectedItem());
             outcomeObservableList.remove(outcomeTableView.getSelectionModel().getSelectedItem());
+            outcomeSelectPositionText.setVisible(false);
         } else {
-            //please select position message to do
+            outcomeSelectPositionText.setVisible(true);
         }
     }
 
@@ -312,8 +312,9 @@ public class MainStageController implements Initializable {
         if(incomeTableView.getSelectionModel().getSelectedIndex() > -1) {
             incomeService.getAllPositions().remove(incomeTableView.getSelectionModel().getSelectedItem());
             incomeObservableList.remove(incomeTableView.getSelectionModel().getSelectedItem());
+            incomeSelectPositionText.setVisible(false);
         } else {
-            //please select position message to do
+            incomeSelectPositionText.setVisible(true);
         }
     }
 }
