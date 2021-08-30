@@ -2,6 +2,7 @@ package olszowka.expenseorganizer.services;
 
 import olszowka.expenseorganizer.model.Income;
 import olszowka.expenseorganizer.model.Outcome;
+import olszowka.expenseorganizer.model.Position;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,7 +22,7 @@ public class JSONParserService {
     public void saveJsonIncomes(List<Income> incomes, File incomesFile) {
         JSONArray incomesJsonList = new JSONArray();
         for(Income i : incomes)
-            incomesJsonList.add(parseIncomeToJson(i));
+            incomesJsonList.add(prepareJsonObject(i));
 
         try (FileWriter fileWriter = new FileWriter(incomesFile)) {
             fileWriter.write(incomesJsonList.toJSONString());
@@ -30,22 +31,10 @@ public class JSONParserService {
         }
     }
 
-    private JSONObject parseIncomeToJson(Income income) {
-        JSONObject incomeAttributes = new JSONObject();
-        incomeAttributes.put("name", income.getName());
-        incomeAttributes.put("value", income.getValue());
-        incomeAttributes.put("category", income.getCategory());
-        incomeAttributes.put("date", income.getDate().toString());
-
-        JSONObject incomeJSONObject = new JSONObject();
-        incomeJSONObject.put("income", incomeAttributes);
-        return incomeJSONObject;
-    }
-
     public void saveJsonOutcomes(List<Outcome> outcomes, File outcomesFile) {
         JSONArray outcomesJsonList = new JSONArray();
         for(Outcome o : outcomes)
-            outcomesJsonList.add(parseOutcomeToJson(o));
+            outcomesJsonList.add(prepareJsonObject(o));
 
         try (FileWriter fileWriter = new FileWriter(outcomesFile)) {
             fileWriter.write(outcomesJsonList.toJSONString());
@@ -54,16 +43,20 @@ public class JSONParserService {
         }
     }
 
-    private JSONObject parseOutcomeToJson(Outcome outcome) {
-        JSONObject outcomeAttributes = new JSONObject();
-        outcomeAttributes.put("name", outcome.getName());
-        outcomeAttributes.put("value", outcome.getValue());
-        outcomeAttributes.put("category", outcome.getCategory());
-        outcomeAttributes.put("date", outcome.getDate().toString());
+    private <T extends Position> JSONObject prepareJsonObject(T position) {
+        JSONObject objectAttributes = new JSONObject();
+        objectAttributes.put("name", position.getName());
+        objectAttributes.put("value", position.getValue());
+        objectAttributes.put("category", position.getCategory());
+        objectAttributes.put("date", position.getDate().toString());
 
-        JSONObject outcomeJSONObject = new JSONObject();
-        outcomeJSONObject.put("outcome", outcomeAttributes);
-        return outcomeJSONObject;
+        JSONObject JSONObject = new JSONObject();
+        if(position instanceof Outcome) {
+            JSONObject.put("outcome", objectAttributes);
+        } else {
+            JSONObject.put("income", objectAttributes);
+        }
+        return JSONObject;
     }
 
     public List<Income> readJsonIncomes(File file) throws IOException, ParseException {
@@ -97,8 +90,8 @@ public class JSONParserService {
     }
 
     private Outcome parseJSONToOutcome(JSONObject position) {
-        JSONObject incomeObject = (JSONObject) position.get("outcome");
-        return new Outcome((String) incomeObject.get("name"),(String) incomeObject.get("value"),
-                (String) incomeObject.get("category"), LocalDate.parse((String)incomeObject.get("date")));
+        JSONObject outcomeObject = (JSONObject) position.get("outcome");
+        return new Outcome((String) outcomeObject.get("name"),(String) outcomeObject.get("value"),
+                (String) outcomeObject.get("category"), LocalDate.parse((String)outcomeObject.get("date")));
     }
 }

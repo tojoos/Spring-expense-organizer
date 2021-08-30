@@ -70,10 +70,10 @@ public class DataController {
     }
 
     public List<Income> getIncomes() throws IOException, ParseException {
-        return  jsonParserService.readJsonIncomes(incomesFile);
+        return jsonParserService.readJsonIncomes(incomesFile);
     }
 
     public List<Outcome> getOutcomes() throws IOException, ParseException {
-        return  jsonParserService.readJsonOutcomes(outcomesFile);
+        return jsonParserService.readJsonOutcomes(outcomesFile);
     }
 }
