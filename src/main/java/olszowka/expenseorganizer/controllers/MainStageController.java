@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -58,7 +59,8 @@ public class MainStageController implements Initializable {
     @FXML
     private Text outcomeTotalSumText, incomeTotalSumText, outcomeSelectCategoryText, outcomeWrongValueText,
             incomeSelectCategoryText, incomeWrongValueText, incomeNameRequiredText, outcomeNameRequiredText,
-            outcomeCategoryText, incomeCategoryText, outcomeSelectPositionText, incomeSelectPositionText;
+            outcomeCategoryText, incomeCategoryText, outcomeSelectPositionText, incomeSelectPositionText,
+            summaryTotalSumText;
 
     @FXML
     private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField;
@@ -151,11 +153,25 @@ public class MainStageController implements Initializable {
             updateIncomeTotalSumTextField();
             updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
         });
+        summaryObservableList.addListener((ListChangeListener<Position>) change -> {
+            updateSummaryTotalSumText();
+            //updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
+        });
 
         initializeTextFieldsListeners(incomeNameTextField, incomeNameRequiredText, incomeValueTextField,
                            incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText, incomeCategoryText);
         initializeTextFieldsListeners(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField,
                            outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText, outcomeCategoryText);
+    }
+
+    private void updateSummaryTotalSumText() {
+        double totalSum = Double.parseDouble(incomeService.calculateTotalAmount()) - Double.parseDouble(outcomeService.calculateTotalAmount());
+        if(totalSum >= 0) {
+            summaryTotalSumText.setFill(Paint.valueOf("#10b244"));
+        } else {
+            summaryTotalSumText.setFill(Paint.valueOf("#ff1a00"));
+        }
+        summaryTotalSumText.setText(totalSum + " zł");
     }
 
     private void initializeTextFieldsListeners(TextField NameTextField,
@@ -280,6 +296,10 @@ public class MainStageController implements Initializable {
                 outcomeNameTextField.clear();
                 outcomeValueTextField.clear();
 
+                summaryObservableList.clear();
+                summaryObservableList.addAll(outcomeObservableList);
+                summaryObservableList.addAll(incomeObservableList);
+
             outcomeNameRequiredText.setVisible(false);
             outcomeWrongValueText.setVisible(false);
             outcomeSelectCategoryText.setVisible(false);
@@ -310,6 +330,10 @@ public class MainStageController implements Initializable {
                 incomeNameTextField.clear();
                 incomeValueTextField.clear();
 
+                summaryObservableList.clear();
+                summaryObservableList.addAll(outcomeObservableList);
+                summaryObservableList.addAll(incomeObservableList);
+
             incomeNameRequiredText.setVisible(false);
             incomeWrongValueText.setVisible(false);
             incomeSelectCategoryText.setVisible(false);
@@ -328,6 +352,9 @@ public class MainStageController implements Initializable {
         if(outcomeTableView.getSelectionModel().getSelectedIndex() > -1) {
             outcomeService.getAllPositions().remove(outcomeTableView.getSelectionModel().getSelectedItem());
             outcomeObservableList.remove(outcomeTableView.getSelectionModel().getSelectedItem());
+            summaryObservableList.clear();
+            summaryObservableList.addAll(outcomeObservableList);
+            summaryObservableList.addAll(incomeObservableList);
             outcomeSelectPositionText.setVisible(false);
         } else {
             outcomeSelectPositionText.setVisible(true);
@@ -339,6 +366,9 @@ public class MainStageController implements Initializable {
         if(incomeTableView.getSelectionModel().getSelectedIndex() > -1) {
             incomeService.getAllPositions().remove(incomeTableView.getSelectionModel().getSelectedItem());
             incomeObservableList.remove(incomeTableView.getSelectionModel().getSelectedItem());
+            summaryObservableList.clear();
+            summaryObservableList.addAll(outcomeObservableList);
+            summaryObservableList.addAll(incomeObservableList);
             incomeSelectPositionText.setVisible(false);
         } else {
             incomeSelectPositionText.setVisible(true);

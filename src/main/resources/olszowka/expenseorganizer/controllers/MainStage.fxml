@@ -62,7 +62,7 @@
                               <Font name="Rockwell" size="25.0" />
                            </font>
                         </Text>
-                        <Text fill="#10b244" layoutX="797.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+623.32 zł" textAlignment="CENTER" wrappingWidth="143.392578125">
+                        <Text fx:id="summaryTotalSumText" fill="#10b244" layoutX="797.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+623.32 zł" textAlignment="CENTER" wrappingWidth="143.392578125">
                            <font>
                               <Font name="Rockwell" size="25.0" />
                            </font>
