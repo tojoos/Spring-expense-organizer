@@ -33,6 +33,7 @@ public class MainStageController implements Initializable {
     private final ValidationService validationService;
     private final ObservableList<Outcome> outcomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Income> incomeObservableList = FXCollections.observableArrayList();
+    private final ObservableList<Position> summaryObservableList = FXCollections.observableArrayList();
     private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Traveling", "Other");
     private final List<String> incomeListOfCategories = Arrays.asList("Primary Job", "Part Time Job", "Scholarship", "Investments", "Cashback");
 
@@ -42,12 +43,17 @@ public class MainStageController implements Initializable {
     private TableView<Outcome> outcomeTableView;
     @FXML
     private TableView<Income> incomeTableView;
+    @FXML
+    private TableView<Position> summaryTableView;
 
     @FXML
     private TableColumn<Outcome, String> outcomeNameColumn, outcomeValueColumn, outcomeCategoryColumn, outcomeDateColumn;
 
     @FXML
     private TableColumn<Income, String> incomeNameColumn, incomeValueColumn, incomeCategoryColumn, incomeDateColumn;
+
+    @FXML
+    private TableColumn<Position, String> summaryNameColumn, summaryValueColumn, summaryCategoryColumn, summaryDateColumn;
 
     @FXML
     private Text outcomeTotalSumText, incomeTotalSumText, outcomeSelectCategoryText, outcomeWrongValueText,
@@ -187,14 +193,35 @@ public class MainStageController implements Initializable {
         incomeCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         incomeDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
+        summaryNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        summaryValueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        summaryCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        summaryDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        summaryTableView.setRowFactory(tr -> new TableRow<>() {
+            @Override
+            protected void updateItem(Position position, boolean empty) {
+                super.updateItem(position, empty);
+                if(position instanceof Income) {
+                    setStyle("-fx-background-color: #44c265");
+                } else {
+                    setStyle("-fx-background-color: #ed6d6d");
+                }
+            }
+        });
+
         incomeObservableList.addAll(incomeService.getAllPositions());
         outcomeObservableList.addAll(outcomeService.getAllPositions());
+        summaryObservableList.addAll(incomeService.getAllPositions());
+        summaryObservableList.addAll(outcomeService.getAllPositions());
 
         outcomeTableView.setItems(outcomeObservableList);
         incomeTableView.setItems(incomeObservableList);
+        summaryTableView.setItems(summaryObservableList);
 
         initializeTableViewSort(incomeDateColumn, incomeTableView);
         initializeTableViewSort(outcomeDateColumn, outcomeTableView);
+        initializeTableViewSort(summaryDateColumn, summaryTableView);
     }
 
     private <T extends Position> void initializeTableViewSort(TableColumn<T, String> sortedTableColumn, TableView<T> tableView) {
