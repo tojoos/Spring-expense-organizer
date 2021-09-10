@@ -11,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
 import olszowka.expenseorganizer.model.Income;
 import olszowka.expenseorganizer.model.Outcome;

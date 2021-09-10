@@ -4,7 +4,6 @@ import olszowka.expenseorganizer.model.Outcome;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class OutcomeServiceImpl extends PositionService<Outcome> implements OutcomeService {
