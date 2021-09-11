@@ -31,7 +31,7 @@
                               <Font name="Rockwell" size="56.0" />
                            </font>
                         </Text>
-                        <PieChart layoutX="509.0" layoutY="90.0" legendVisible="false" prefHeight="460.0" prefWidth="720.0" />
+                        <PieChart fx:id="summaryPieChart" layoutX="509.0" layoutY="90.0" legendVisible="false" prefHeight="460.0" prefWidth="720.0" />
                         <Text fill="WHITE" layoutX="665.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Budget:" textAlignment="CENTER" wrappingWidth="81.392578125">
                            <font>
                               <Font name="Rockwell" size="22.0" />
@@ -42,7 +42,7 @@
                               <Font name="Rockwell" size="25.0" />
                            </font>
                         </Text>
-                        <ProgressBar layoutX="665.0" layoutY="607.0" prefHeight="28.0" prefWidth="409.0" progress="0.0" />
+                        <ProgressBar fx:id="budgetProgressionBar" layoutX="665.0" layoutY="607.0" prefHeight="28.0" prefWidth="409.0" progress="0.0" />
                         <BarChart horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" layoutX="31.0" layoutY="482.0" prefHeight="186.0" prefWidth="444.0" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
@@ -119,7 +119,7 @@
                                     <Font name="Rockwell" size="16.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="outcomeTotalSumText" fill="#ff1a00" layoutX="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-0$">
+                              <Text fx:id="outcomeTotalSumText" fill="#ff1a00" layoutX="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-0 zł">
                                  <font>
                                     <Font name="Rockwell" size="16.0" />
                                  </font>
@@ -310,7 +310,7 @@
                                     <Font name="Rockwell" size="16.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="incomeTotalSumText" fill="#039e18" layoutX="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+0$">
+                              <Text fx:id="incomeTotalSumText" fill="#039e18" layoutX="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+0 zł">
                                  <font>
                                     <Font name="Rockwell" size="16.0" />
                                  </font>

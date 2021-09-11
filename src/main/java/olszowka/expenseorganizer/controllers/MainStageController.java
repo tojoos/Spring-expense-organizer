@@ -68,7 +68,7 @@ public class MainStageController implements Initializable {
     private ComboBox<String> outcomeCategoryComboBox, incomeCategoryComboBox;
 
     @FXML
-    private PieChart outcomePieChart, incomePieChart;
+    private PieChart outcomePieChart, incomePieChart, summaryPieChart;
 
     public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService, JSONParserService jsonParserService) throws IOException, ParseException {
         this.incomeService = incomeService;
@@ -115,6 +115,24 @@ public class MainStageController implements Initializable {
     private void updatePieCharts() {
         updatePieChart(outcomeListOfCategories, outcomeObservableList, outcomePieChart);
         updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
+        updateSummaryPieChart();
+    }
+
+    private void updateSummaryPieChart() {
+        double totalOutcomes = 0;
+        double totalIncomes = 0;
+        ObservableList<PieChart.Data> pieDataChart = FXCollections.observableArrayList();
+
+        totalOutcomes = Double.parseDouble(outcomeService.calculateTotalAmount());
+        totalIncomes = Double.parseDouble(incomeService.calculateTotalAmount());
+
+        PieChart.Data pieChartOutcomeData = new PieChart.Data("Outcomes", totalOutcomes);
+        PieChart.Data pieChartIncomeData = new PieChart.Data("Incomes", totalIncomes);
+
+        pieDataChart.add(pieChartOutcomeData);
+        pieDataChart.add(pieChartIncomeData);
+
+        summaryPieChart.setData(pieDataChart);
     }
 
     private <T extends Position> void updatePieChart(List<String> listOfCategories, ObservableList<T> observableList, PieChart pieChart) {
@@ -131,7 +149,7 @@ public class MainStageController implements Initializable {
         }
         for(int i = 0 ; i < listOfCategories.size() ; i++) {
             if(amounts[i]>0)
-                PieDataChart.add(new PieChart.Data(listOfCategories.get(i),amounts[i]));
+                PieDataChart.add(new PieChart.Data(listOfCategories.get(i), amounts[i]));
         }
         pieChart.setData(PieDataChart);
     }
@@ -147,10 +165,12 @@ public class MainStageController implements Initializable {
         outcomeObservableList.addListener((ListChangeListener<Outcome>) change -> {
             updateOutcomeTotalSumTextField();
             updatePieChart(outcomeListOfCategories, outcomeObservableList, outcomePieChart);
+            updateSummaryPieChart();
         });
         incomeObservableList.addListener((ListChangeListener<Income>) change -> {
             updateIncomeTotalSumTextField();
             updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
+            updateSummaryPieChart();
         });
         summaryObservableList.addListener((ListChangeListener<Position>) change -> {
             updateSummaryTotalSumText();
@@ -217,7 +237,9 @@ public class MainStageController implements Initializable {
             @Override
             protected void updateItem(Position position, boolean empty) {
                 super.updateItem(position, empty);
-                if(position instanceof Income) {
+                if(position == null) {
+                    setStyle("-fx-background-color: #66CCCCFF");
+                } else if(position instanceof Income) {
                     setStyle("-fx-background-color: #44c265");
                 } else {
                     setStyle("-fx-background-color: #ed6d6d");
