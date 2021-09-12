@@ -33,7 +33,7 @@
                            </font>
                         </Text>
                         <PieChart fx:id="summaryPieChart" layoutX="509.0" layoutY="90.0" legendVisible="false" prefHeight="460.0" prefWidth="720.0" />
-                        <Text fill="WHITE" layoutX="665.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Budget:" textAlignment="CENTER" wrappingWidth="81.392578125">
+                        <Text fill="WHITE" layoutX="687.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Budget:" textAlignment="CENTER" wrappingWidth="81.392578125">
                            <font>
                               <Font name="Rockwell" size="22.0" />
                            </font>
@@ -73,7 +73,7 @@
                               <Font name="Rockwell" size="25.0" />
                            </font>
                         </Text>
-                        <Text fx:id="summaryBudgetText" fill="WHITE" layoutX="957.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5000 zł" textAlignment="RIGHT" wrappingWidth="116.392578125">
+                        <Text fx:id="summaryBudgetText" fill="WHITE" layoutX="841.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5000 zł" textAlignment="RIGHT" wrappingWidth="232.392578125">
                            <font>
                               <Font name="Rockwell" size="22.0" />
                            </font>
@@ -95,9 +95,9 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Text fx:id="changeBudgetText" fill="WHITE" layoutX="665.0" layoutY="648.0" onMouseClicked="#onChangeBudgetLabelClicked" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Change budget" textAlignment="CENTER" wrappingWidth="101.392578125">
+                        <Text fx:id="changeBudgetText" fill="WHITE" layoutX="658.0" layoutY="603.0" onMouseClicked="#onChangeBudgetLabelClicked" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="⚙" textAlignment="CENTER" wrappingWidth="36.392578125">
                            <font>
-                              <Font name="Rockwell" size="14.0" />
+                              <Font name="Rockwell" size="24.0" />
                            </font>
                         </Text>
                         <AnchorPane fx:id="budgetPane" disable="true" layoutX="470.0" layoutY="512.0" prefHeight="155.0" prefWidth="177.0" style="-fx-background-color: #66CCCC; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10; -fx-border-width: 2;" visible="false">

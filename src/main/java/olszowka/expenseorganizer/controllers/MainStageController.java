@@ -32,14 +32,13 @@ public class MainStageController implements Initializable {
     private final IncomeService incomeService;
     private final OutcomeService outcomeService;
     private final ValidationService validationService;
+    private final DataController dataController;
     private final ObservableList<Outcome> outcomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Income> incomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Position> summaryObservableList = FXCollections.observableArrayList();
     private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Traveling", "Other");
     private final List<String> incomeListOfCategories = Arrays.asList("Primary Job", "Part Time Job", "Scholarship", "Investments", "Cashback");
     private static final double DEFAULT_BUDGET = 5000.0;
-
-    private final DataController dataController;
 
     @FXML
     private AnchorPane budgetPane;
@@ -139,7 +138,7 @@ public class MainStageController implements Initializable {
         if(validationService.isValueValid(summaryBudgetTextField.getText())) {
             budgetValue = Double.parseDouble(summaryBudgetTextField.getText());
             updateBudgetProgressionBar();
-            summaryBudgetText.setText(budgetValue + " zł");
+            summaryBudgetText.setText(outcomeService.calculateTotalAmount() + "/" + budgetValue + " zł");
             summaryWrongBudgetValuePromptText.setVisible(false);
             summarySubmittedPromptText.setVisible(true);
         } else {
@@ -235,6 +234,7 @@ public class MainStageController implements Initializable {
         summaryObservableList.addListener((ListChangeListener<Position>) change -> {
             updateSummaryTotalSumText();
             updateBudgetProgressionBar();
+            summaryBudgetText.setText(outcomeService.calculateTotalAmount() + "/" + budgetValue + " zł");
         });
 
         initializeTextFieldsListeners(incomeNameTextField, incomeNameRequiredText, incomeValueTextField,
