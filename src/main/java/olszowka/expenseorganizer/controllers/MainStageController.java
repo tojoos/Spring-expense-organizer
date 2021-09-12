@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.NoSuchFileException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -92,6 +93,12 @@ public class MainStageController implements Initializable {
         initializeListeners();
         initializeTableViews();
         updatePieCharts();
+
+        try {
+            summaryPieChart.getStylesheets().add("/css/summary-pie-chart-styles.css");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void saveIncomesDataFiles() {
@@ -119,8 +126,8 @@ public class MainStageController implements Initializable {
     }
 
     private void updateSummaryPieChart() {
-        double totalOutcomes = 0;
-        double totalIncomes = 0;
+        double totalOutcomes;
+        double totalIncomes;
         ObservableList<PieChart.Data> pieDataChart = FXCollections.observableArrayList();
 
         totalOutcomes = Double.parseDouble(outcomeService.calculateTotalAmount());
