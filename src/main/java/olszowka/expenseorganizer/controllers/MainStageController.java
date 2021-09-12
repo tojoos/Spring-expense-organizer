@@ -4,11 +4,14 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -21,7 +24,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.NoSuchFileException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -39,6 +41,13 @@ public class MainStageController implements Initializable {
     private final List<String> incomeListOfCategories = Arrays.asList("Primary Job", "Part Time Job", "Scholarship", "Investments", "Cashback");
 
     private final DataController dataController;
+
+    @FXML
+    private AnchorPane budgetPane;
+
+    private double xOffset;
+    private double yOffset;
+    private double budgetValue;
 
     @FXML
     private TableView<Outcome> outcomeTableView;
@@ -60,10 +69,11 @@ public class MainStageController implements Initializable {
     private Text outcomeTotalSumText, incomeTotalSumText, outcomeSelectCategoryText, outcomeWrongValueText,
             incomeSelectCategoryText, incomeWrongValueText, incomeNameRequiredText, outcomeNameRequiredText,
             outcomeCategoryText, incomeCategoryText, outcomeSelectPositionText, incomeSelectPositionText,
-            summaryTotalSumText;
+            summaryTotalSumText, summarySubmittedPromptText, summaryWrongBudgetValuePromptText, summaryBudgetText;
 
     @FXML
-    private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField;
+    private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField,
+            summaryBudgetTextField;
 
     @FXML
     private ComboBox<String> outcomeCategoryComboBox, incomeCategoryComboBox;
@@ -94,11 +104,50 @@ public class MainStageController implements Initializable {
         initializeTableViews();
         updatePieCharts();
 
+        initializeSummaryBudgetPane();
+
         try {
             summaryPieChart.getStylesheets().add("/css/summary-pie-chart-styles.css");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void initializeSummaryBudgetPane() {
+            budgetPane.setOnMousePressed(mouseEvent -> Platform.runLater(() -> {
+                xOffset = mouseEvent.getX();
+                yOffset = mouseEvent.getY() + 28;
+            }));
+
+            budgetPane.setOnMouseDragged(mouseEvent -> Platform.runLater(() -> {
+                budgetPane.setLayoutX(mouseEvent.getSceneX() - xOffset);
+                budgetPane.setLayoutY(mouseEvent.getSceneY() - yOffset);
+            }));
+    }
+
+    @FXML
+    private void onChangeBudgetLabelClicked() {
+        budgetPane.setDisable(false);
+        budgetPane.setVisible(true);
+    }
+
+    @FXML
+    private void summaryBudgetSubmitButtonClicked() {
+        if(validationService.isValueValid(summaryBudgetTextField.getText())) {
+            budgetValue = Double.parseDouble(summaryBudgetTextField.getText());
+            summaryBudgetText.setText(budgetValue + " zł");
+            summaryWrongBudgetValuePromptText.setVisible(false);
+            summarySubmittedPromptText.setVisible(true);
+        } else {
+            summarySubmittedPromptText.setVisible(false);
+            summaryWrongBudgetValuePromptText.setVisible(true);
+        }
+    }
+
+    @FXML
+    private void onBudgetPaneCloseLabelClicked() {
+        budgetPane.setVisible(false);
+        budgetPane.setDisable(true);
     }
 
     private void saveIncomesDataFiles() {
@@ -181,7 +230,6 @@ public class MainStageController implements Initializable {
         });
         summaryObservableList.addListener((ListChangeListener<Position>) change -> {
             updateSummaryTotalSumText();
-            //updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
         });
 
         initializeTextFieldsListeners(incomeNameTextField, incomeNameRequiredText, incomeValueTextField,

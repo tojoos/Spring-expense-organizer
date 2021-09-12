@@ -7,6 +7,7 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -72,7 +73,7 @@
                               <Font name="Rockwell" size="25.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="1011.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" text="500 zł" textAlignment="CENTER" wrappingWidth="62.392578125">
+                        <Text fx:id="summaryBudgetText" fill="WHITE" layoutX="957.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="500 zł" textAlignment="RIGHT" wrappingWidth="116.392578125">
                            <font>
                               <Font name="Rockwell" size="22.0" />
                            </font>
@@ -91,6 +92,45 @@
                               <TableColumn fx:id="summaryDateColumn" prefWidth="133.0" resizable="false" text="Date" />
                            </columns>
                         </TableView>
+                        <Text fx:id="changeBudgetText" fill="WHITE" layoutX="665.0" layoutY="648.0" onMouseClicked="#onChangeBudgetLabelClicked" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Change budget" textAlignment="CENTER" wrappingWidth="110.392578125">
+                           <font>
+                              <Font name="Rockwell" size="14.0" />
+                           </font>
+                        </Text>
+                        <AnchorPane fx:id="budgetPane" disable="true" layoutX="470.0" layoutY="512.0" prefHeight="155.0" prefWidth="177.0" style="-fx-background-color: #66CCCC; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10; -fx-border-width: 2;" visible="false">
+                           <children>
+                              <TextField fx:id="summaryBudgetTextField" layoutX="37.0" layoutY="83.0" prefHeight="28.0" prefWidth="104.0" promptText="Your budget">
+                                 <font>
+                                    <Font name="Rockwell" size="14.0" />
+                                 </font>
+                              </TextField>
+                              <Button layoutX="59.0" layoutY="117.0" mnemonicParsing="false" onAction="#summaryBudgetSubmitButtonClicked" prefHeight="15.0" prefWidth="60.0" style="-fx-background-color: white;" text="Submit">
+                                 <font>
+                                    <Font name="Rockwell" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Text fill="WHITE" layoutX="19.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insert your new budget:" textAlignment="CENTER" wrappingWidth="140.392578125">
+                                 <font>
+                                    <Font name="Rockwell" size="20.0" />
+                                 </font>
+                              </Text>
+                              <Label alignment="CENTER" layoutX="148.0" layoutY="4.0" onMouseClicked="#onBudgetPaneCloseLabelClicked" prefHeight="25.0" prefWidth="27.0" text="X" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="summarySubmittedPromptText" fill="WHITE" layoutX="47.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Submitted!" textAlignment="CENTER" wrappingWidth="84.392578125">
+                                 <font>
+                                    <Font name="Rockwell" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="summaryWrongBudgetValuePromptText" fill="RED" layoutX="31.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wrong Value" textAlignment="CENTER" visible="false" wrappingWidth="116.392578125">
+                                 <font>
+                                    <Font name="Rockwell" size="14.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
                      </children></AnchorPane>
                </content>
             </Tab>
@@ -112,24 +152,17 @@
                               </Text>
                            </children>
                         </Group>
-                        <Group layoutX="280.0" layoutY="581.8671875">
-                           <children>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="In total:">
-                                 <font>
-                                    <Font name="Rockwell" size="16.0" />
-                                 </font>
-                              </Text>
-                              <Text fx:id="outcomeTotalSumText" fill="#ff1a00" layoutX="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-0 zł">
-                                 <font>
-                                    <Font name="Rockwell" size="16.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </Group>
+                        <Group layoutX="280.0" layoutY="581.8671875" />
                         <Group layoutX="491.0" layoutY="70.0">
                            <children>
-                              <PieChart fx:id="outcomePieChart" layoutY="31.0" legendVisible="false" prefHeight="380.0" prefWidth="729.0" />
+                              <PieChart fx:id="outcomePieChart" layoutY="31.0" legendVisible="false" prefHeight="434.0" prefWidth="766.0" />
                               <Text fill="WHITE" layoutX="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Breakdown of expenses" textAlignment="CENTER" wrappingWidth="424.392578125">
+                                 <font>
+                                    <Font name="Rockwell" size="25.0" />
+                                 </font>
+                              </Text>
+                              <Circle fill="#66cccc" layoutX="383.0" layoutY="248.0" radius="100.0" stroke="#f5fcfc" strokeType="INSIDE" strokeWidth="1.5" />
+                              <Text fx:id="outcomeTotalSumText" fill="#ff1a00" layoutX="309.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-0 zł" textAlignment="CENTER" wrappingWidth="147.8984375">
                                  <font>
                                     <Font name="Rockwell" size="25.0" />
                                  </font>
@@ -244,7 +277,7 @@
                            </font>
                         </Text>
                         <Text fx:id="outcomeCategoryText" layoutX="348.0" layoutY="658.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Category" visible="false" />
-                        <Button layoutX="424.0" layoutY="538.0" mnemonicParsing="false" onAction="#onOutcomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" style="-fx-background-color: white;" text="Delete selected">
+                        <Button layoutX="308.0" layoutY="567.0" mnemonicParsing="false" onAction="#onOutcomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" style="-fx-background-color: white;" text="Delete selected">
                            <font>
                               <Font name="Rockwell" size="13.0" />
                            </font>
@@ -303,24 +336,17 @@
                               </Text>
                            </children>
                         </Group>
-                        <Group layoutX="280.0" layoutY="581.8671875">
-                           <children>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="In total:">
-                                 <font>
-                                    <Font name="Rockwell" size="16.0" />
-                                 </font>
-                              </Text>
-                              <Text fx:id="incomeTotalSumText" fill="#039e18" layoutX="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+0 zł">
-                                 <font>
-                                    <Font name="Rockwell" size="16.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </Group>
+                        <Group layoutX="280.0" layoutY="581.8671875" />
                         <Group layoutX="491.0" layoutY="70.0">
                            <children>
-                              <PieChart fx:id="incomePieChart" layoutY="31.0" legendVisible="false" prefHeight="380.0" prefWidth="729.0" />
+                              <PieChart fx:id="incomePieChart" layoutY="31.0" legendVisible="false" prefHeight="434.0" prefWidth="766.0" />
                               <Text fill="WHITE" layoutX="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Breakdown of incomes" textAlignment="CENTER" wrappingWidth="424.392578125">
+                                 <font>
+                                    <Font name="Rockwell" size="25.0" />
+                                 </font>
+                              </Text>
+                              <Circle fill="#66cccc" layoutX="383.0" layoutY="248.0" radius="100.0" stroke="#f5fcfc" strokeType="INSIDE" strokeWidth="1.5" />
+                              <Text fx:id="incomeTotalSumText" fill="#039e18" layoutX="310.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+0 zł" textAlignment="CENTER" wrappingWidth="146.90625">
                                  <font>
                                     <Font name="Rockwell" size="25.0" />
                                  </font>
@@ -410,7 +436,7 @@
                               </Text>
                            </children>
                         </Group>
-                        <Button layoutX="424.0" layoutY="538.0" mnemonicParsing="false" onAction="#onIncomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" style="-fx-background-color: white;" text="Delete selected">
+                        <Button layoutX="308.0" layoutY="567.0" mnemonicParsing="false" onAction="#onIncomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" style="-fx-background-color: white;" text="Delete selected">
                            <font>
                               <Font name="Rockwell" size="13.0" />
                            </font>
