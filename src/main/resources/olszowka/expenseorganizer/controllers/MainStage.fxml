@@ -73,7 +73,7 @@
                               <Font name="Rockwell" size="25.0" />
                            </font>
                         </Text>
-                        <Text fx:id="summaryBudgetText" fill="WHITE" layoutX="957.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="500 zł" textAlignment="RIGHT" wrappingWidth="116.392578125">
+                        <Text fx:id="summaryBudgetText" fill="WHITE" layoutX="957.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5000 zł" textAlignment="RIGHT" wrappingWidth="116.392578125">
                            <font>
                               <Font name="Rockwell" size="22.0" />
                            </font>
@@ -89,8 +89,11 @@
                               <TableColumn fx:id="summaryNameColumn" editable="false" prefWidth="107.0" resizable="false" text="Name" />
                               <TableColumn fx:id="summaryValueColumn" editable="false" minWidth="0.0" prefWidth="66.0" resizable="false" text="Value" />
                               <TableColumn fx:id="summaryCategoryColumn" editable="false" minWidth="0.0" prefWidth="87.0" resizable="false" text="Category" />
-                              <TableColumn fx:id="summaryDateColumn" prefWidth="133.0" resizable="false" text="Date" />
+                              <TableColumn fx:id="summaryDateColumn" prefWidth="119.0" resizable="false" text="Date" />
                            </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                         <Text fx:id="changeBudgetText" fill="WHITE" layoutX="665.0" layoutY="648.0" onMouseClicked="#onChangeBudgetLabelClicked" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Change budget" textAlignment="CENTER" wrappingWidth="101.392578125">
                            <font>
@@ -199,12 +202,12 @@
                                     <Font name="Rockwell" size="19.0" />
                                  </font>
                               </Text>
-                              <Text fill="#ff1a00" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="-6563.53$" textAlignment="CENTER" wrappingWidth="99.71923828125">
+                              <Text fill="#ff1a00" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="-6563.53 zł" textAlignment="CENTER" wrappingWidth="99.71923828125">
                                  <font>
                                     <Font name="Rockwell" size="19.0" />
                                  </font>
                               </Text>
-                              <Text fill="#ff1a00" layoutX="174.0" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="-7563.53$" textAlignment="CENTER" wrappingWidth="99.71923828125">
+                              <Text fill="#ff1a00" layoutX="174.0" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="-7563.53 zł" textAlignment="CENTER" wrappingWidth="99.71923828125">
                                  <font>
                                     <Font name="Rockwell" size="19.0" />
                                  </font>
@@ -219,7 +222,7 @@
                                     <Font name="Rockwell" size="19.0" />
                                  </font>
                               </Text>
-                              <Text fill="#10b244" layoutX="351.0" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="+1000$" textAlignment="CENTER" wrappingWidth="77.71923828125">
+                              <Text fill="#10b244" layoutX="351.0" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="+1000 zł" textAlignment="CENTER" wrappingWidth="77.71923828125">
                                  <font>
                                     <Font name="Rockwell" size="19.0" />
                                  </font>
@@ -409,12 +412,12 @@
                                     <Font name="Rockwell" size="19.0" />
                                  </font>
                               </Text>
-                              <Text fill="#039e18" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="+2263.53$" textAlignment="CENTER" wrappingWidth="99.71923828125">
+                              <Text fill="#039e18" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="+2263.53 zł" textAlignment="CENTER" wrappingWidth="99.71923828125">
                                  <font>
                                     <Font name="Rockwell" size="19.0" />
                                  </font>
                               </Text>
-                              <Text fill="#039e18" layoutX="174.0" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="+4323.53$" textAlignment="CENTER" wrappingWidth="99.71923828125">
+                              <Text fill="#039e18" layoutX="174.0" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="+4323.53 zł" textAlignment="CENTER" wrappingWidth="99.71923828125">
                                  <font>
                                     <Font name="Rockwell" size="19.0" />
                                  </font>
@@ -429,7 +432,7 @@
                                     <Font name="Rockwell" size="19.0" />
                                  </font>
                               </Text>
-                              <Text fill="RED" layoutX="351.0" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="-2000$" textAlignment="CENTER" wrappingWidth="77.71923828125">
+                              <Text fill="RED" layoutX="351.0" layoutY="73.6748046875" strokeType="OUTSIDE" strokeWidth="0.0" text="-2000 zł" textAlignment="CENTER" wrappingWidth="77.71923828125">
                                  <font>
                                     <Font name="Rockwell" size="19.0" />
                                  </font>

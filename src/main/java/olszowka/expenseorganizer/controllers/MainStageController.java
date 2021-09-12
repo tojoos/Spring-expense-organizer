@@ -37,6 +37,7 @@ public class MainStageController implements Initializable {
     private final ObservableList<Position> summaryObservableList = FXCollections.observableArrayList();
     private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Traveling", "Other");
     private final List<String> incomeListOfCategories = Arrays.asList("Primary Job", "Part Time Job", "Scholarship", "Investments", "Cashback");
+    private static final double DEFAULT_BUDGET = 5000.0;
 
     private final DataController dataController;
 
@@ -45,7 +46,7 @@ public class MainStageController implements Initializable {
 
     private double xOffset;
     private double yOffset;
-    private double budgetValue;
+    private double budgetValue = DEFAULT_BUDGET;
 
     @FXML
     private TableView<Outcome> outcomeTableView;
