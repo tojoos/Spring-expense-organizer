@@ -107,12 +107,6 @@ public class MainStageController implements Initializable {
         updatePieCharts();
 
         initializeSummaryBudgetPane();
-
-        try {
-            summaryPieChart.getStylesheets().add("/css/summary-pie-chart-styles.css");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     private void initializeSummaryBudgetPane() {
@@ -131,6 +125,7 @@ public class MainStageController implements Initializable {
     private void onChangeBudgetLabelClicked() {
         budgetPane.setDisable(false);
         budgetPane.setVisible(true);
+        summarySubmittedPromptText.setVisible(false);
     }
 
     @FXML
@@ -382,21 +377,11 @@ public class MainStageController implements Initializable {
                                 outcomeNameTextField.getText(),
                                 validationService.returnFormattedValue(outcomeValueTextField.getText()),
                                 outcomeCategoryComboBox.getSelectionModel().getSelectedItem()));
-                outcomeObservableList.clear();
-                outcomeObservableList.addAll(outcomeService.getAllPositions());
-                outcomeCategoryComboBox.getSelectionModel().clearSelection();
-                outcomeNameTextField.clear();
-                outcomeValueTextField.clear();
 
-                summaryObservableList.clear();
-                summaryObservableList.addAll(outcomeObservableList);
-                summaryObservableList.addAll(incomeObservableList);
+           clearPositionAfterSubmitted(outcomeObservableList, outcomeService, outcomeTableView, outcomeCategoryComboBox,
+                                       outcomeNameTextField, outcomeValueTextField, outcomeNameRequiredText, outcomeWrongValueText, outcomeSelectCategoryText);
 
-            outcomeNameRequiredText.setVisible(false);
-            outcomeWrongValueText.setVisible(false);
-            outcomeSelectCategoryText.setVisible(false);
             wasSubmitted = true;
-            outcomeTableView.sort();
         }
 
         if(!wasSubmitted) {
@@ -416,21 +401,10 @@ public class MainStageController implements Initializable {
                                 incomeNameTextField.getText(),
                                 validationService.returnFormattedValue(incomeValueTextField.getText()),
                                 incomeCategoryComboBox.getSelectionModel().getSelectedItem()));
-                incomeObservableList.clear();
-                incomeObservableList.addAll(incomeService.getAllPositions());
-                incomeCategoryComboBox.getSelectionModel().clearSelection();
-                incomeNameTextField.clear();
-                incomeValueTextField.clear();
 
-                summaryObservableList.clear();
-                summaryObservableList.addAll(outcomeObservableList);
-                summaryObservableList.addAll(incomeObservableList);
-
-            incomeNameRequiredText.setVisible(false);
-            incomeWrongValueText.setVisible(false);
-            incomeSelectCategoryText.setVisible(false);
+           clearPositionAfterSubmitted(incomeObservableList, incomeService, incomeTableView, incomeCategoryComboBox,
+                                       incomeNameTextField, incomeValueTextField, incomeNameRequiredText, incomeWrongValueText, incomeSelectCategoryText);
             wasSubmitted = true;
-            incomeTableView.sort();
         }
 
         if(!wasSubmitted) {
@@ -441,29 +415,55 @@ public class MainStageController implements Initializable {
 
     @FXML
     private void onOutcomeDeleteButtonClicked() {
-        if(outcomeTableView.getSelectionModel().getSelectedIndex() > -1) {
-            outcomeService.getAllPositions().remove(outcomeTableView.getSelectionModel().getSelectedItem());
-            outcomeObservableList.remove(outcomeTableView.getSelectionModel().getSelectedItem());
-            summaryObservableList.clear();
-            summaryObservableList.addAll(outcomeObservableList);
-            summaryObservableList.addAll(incomeObservableList);
-            outcomeSelectPositionText.setVisible(false);
-        } else {
-            outcomeSelectPositionText.setVisible(true);
-        }
+        onPositionDeleteButtonClicked(outcomeTableView, outcomeService,
+                outcomeObservableList, outcomeSelectPositionText);
     }
 
     @FXML
     private void onIncomeDeleteButtonClicked() {
-        if(incomeTableView.getSelectionModel().getSelectedIndex() > -1) {
-            incomeService.getAllPositions().remove(incomeTableView.getSelectionModel().getSelectedItem());
-            incomeObservableList.remove(incomeTableView.getSelectionModel().getSelectedItem());
+        onPositionDeleteButtonClicked(incomeTableView, incomeService,
+                incomeObservableList, incomeSelectPositionText);
+    }
+
+    private <T extends Position> void onPositionDeleteButtonClicked(TableView<T> positionTableView,
+                                                                    CrudService<T> positionService,
+                                                                    ObservableList<T> positionObservableList,
+                                                                    Text positionSelectPositionText) {
+        if(positionTableView.getSelectionModel().getSelectedIndex() > -1) {
+            positionService.getAllPositions().remove(positionTableView.getSelectionModel().getSelectedItem());
+            positionObservableList.remove(positionTableView.getSelectionModel().getSelectedItem());
             summaryObservableList.clear();
             summaryObservableList.addAll(outcomeObservableList);
             summaryObservableList.addAll(incomeObservableList);
-            incomeSelectPositionText.setVisible(false);
+            positionSelectPositionText.setVisible(false);
         } else {
-            incomeSelectPositionText.setVisible(true);
+            positionSelectPositionText.setVisible(true);
         }
     }
+
+    private <T extends Position> void clearPositionAfterSubmitted(ObservableList<T> positionObservableList,
+                                                                  CrudService<T> positionService,
+                                                                  TableView<T> positionTableView,
+                                                                  ComboBox<String> positionCategoryComboBox,
+                                                                  TextField positionNameTextField,
+                                                                  TextField positionValueTextField,
+                                                                  Text positionNameRequiredText,
+                                                                  Text positionWrongValueText,
+                                                                  Text positionSelectCategoryText) {
+        positionObservableList.clear();
+        positionObservableList.addAll(positionService.getAllPositions());
+        positionCategoryComboBox.getSelectionModel().clearSelection();
+        positionNameTextField.clear();
+        positionValueTextField.clear();
+
+        summaryObservableList.clear();
+        summaryObservableList.addAll(outcomeObservableList);
+        summaryObservableList.addAll(incomeObservableList);
+
+        positionNameRequiredText.setVisible(false);
+        positionWrongValueText.setVisible(false);
+        positionSelectCategoryText.setVisible(false);
+        positionTableView.sort();
+    }
+
 }

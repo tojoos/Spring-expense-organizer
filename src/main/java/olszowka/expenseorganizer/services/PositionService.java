@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class PositionService<T extends Position> {
     protected List<T> positions = new ArrayList<>();
 
-    List<T> getAllPositions() {
+    public List<T> getAllPositions() {
         return positions;
     }
 
