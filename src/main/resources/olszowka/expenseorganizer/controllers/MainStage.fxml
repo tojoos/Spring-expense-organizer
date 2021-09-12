@@ -68,7 +68,7 @@
                               <Font name="Rockwell" size="25.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="798.0" layoutY="659.0" strokeType="OUTSIDE" strokeWidth="0.0" text="57%" textAlignment="CENTER" wrappingWidth="143.392578125">
+                        <Text fx:id="budgetProgressionText" fill="WHITE" layoutX="798.0" layoutY="659.0" strokeType="OUTSIDE" strokeWidth="0.0" text="57%" textAlignment="CENTER" wrappingWidth="143.392578125">
                            <font>
                               <Font name="Rockwell" size="25.0" />
                            </font>
@@ -92,7 +92,7 @@
                               <TableColumn fx:id="summaryDateColumn" prefWidth="133.0" resizable="false" text="Date" />
                            </columns>
                         </TableView>
-                        <Text fx:id="changeBudgetText" fill="WHITE" layoutX="665.0" layoutY="648.0" onMouseClicked="#onChangeBudgetLabelClicked" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Change budget" textAlignment="CENTER" wrappingWidth="110.392578125">
+                        <Text fx:id="changeBudgetText" fill="WHITE" layoutX="665.0" layoutY="648.0" onMouseClicked="#onChangeBudgetLabelClicked" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Change budget" textAlignment="CENTER" wrappingWidth="101.392578125">
                            <font>
                               <Font name="Rockwell" size="14.0" />
                            </font>

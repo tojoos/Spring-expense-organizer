@@ -4,13 +4,11 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -69,7 +67,8 @@ public class MainStageController implements Initializable {
     private Text outcomeTotalSumText, incomeTotalSumText, outcomeSelectCategoryText, outcomeWrongValueText,
             incomeSelectCategoryText, incomeWrongValueText, incomeNameRequiredText, outcomeNameRequiredText,
             outcomeCategoryText, incomeCategoryText, outcomeSelectPositionText, incomeSelectPositionText,
-            summaryTotalSumText, summarySubmittedPromptText, summaryWrongBudgetValuePromptText, summaryBudgetText;
+            summaryTotalSumText, summarySubmittedPromptText, summaryWrongBudgetValuePromptText, summaryBudgetText,
+            budgetProgressionText;
 
     @FXML
     private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField,
@@ -80,6 +79,9 @@ public class MainStageController implements Initializable {
 
     @FXML
     private PieChart outcomePieChart, incomePieChart, summaryPieChart;
+
+    @FXML
+    private ProgressBar budgetProgressionBar;
 
     public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService, JSONParserService jsonParserService) throws IOException, ParseException {
         this.incomeService = incomeService;
@@ -135,6 +137,7 @@ public class MainStageController implements Initializable {
     private void summaryBudgetSubmitButtonClicked() {
         if(validationService.isValueValid(summaryBudgetTextField.getText())) {
             budgetValue = Double.parseDouble(summaryBudgetTextField.getText());
+            updateBudgetProgressionBar();
             summaryBudgetText.setText(budgetValue + " zł");
             summaryWrongBudgetValuePromptText.setVisible(false);
             summarySubmittedPromptText.setVisible(true);
@@ -230,12 +233,24 @@ public class MainStageController implements Initializable {
         });
         summaryObservableList.addListener((ListChangeListener<Position>) change -> {
             updateSummaryTotalSumText();
+            updateBudgetProgressionBar();
         });
 
         initializeTextFieldsListeners(incomeNameTextField, incomeNameRequiredText, incomeValueTextField,
                            incomeWrongValueText, incomeCategoryComboBox, incomeSelectCategoryText, incomeCategoryText);
         initializeTextFieldsListeners(outcomeNameTextField, outcomeNameRequiredText, outcomeValueTextField,
                            outcomeWrongValueText, outcomeCategoryComboBox, outcomeSelectCategoryText, outcomeCategoryText);
+    }
+
+    private void updateBudgetProgressionBar() {
+        if(Double.parseDouble(outcomeService.calculateTotalAmount()) >= budgetValue) {
+            budgetProgressionBar.setProgress(100);
+            budgetProgressionText.setText("100%");
+        } else {
+            double progression = Double.parseDouble(outcomeService.calculateTotalAmount())/budgetValue;
+            budgetProgressionBar.setProgress(progression);
+            budgetProgressionText.setText(Math.round(progression*100) + "%");
+        }
     }
 
     private void updateSummaryTotalSumText() {
