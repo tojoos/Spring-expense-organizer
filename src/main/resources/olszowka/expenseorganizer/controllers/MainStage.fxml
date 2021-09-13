@@ -89,7 +89,7 @@
                               <TableColumn fx:id="summaryNameColumn" editable="false" prefWidth="107.0" resizable="false" text="Name" />
                               <TableColumn fx:id="summaryValueColumn" editable="false" minWidth="0.0" prefWidth="66.0" resizable="false" text="Value" />
                               <TableColumn fx:id="summaryCategoryColumn" editable="false" minWidth="0.0" prefWidth="87.0" resizable="false" text="Category" />
-                              <TableColumn fx:id="summaryDateColumn" prefWidth="119.0" resizable="false" text="Date" />
+                              <TableColumn fx:id="summaryDateColumn" prefWidth="120.0" resizable="false" text="Date" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -187,7 +187,7 @@
                             <TableColumn fx:id="outcomeNameColumn" editable="false" prefWidth="150.0" resizable="false" text="Name" />
                             <TableColumn fx:id="outcomeValueColumn" editable="false" prefWidth="55.0" resizable="false" text="Value" />
                               <TableColumn fx:id="outcomeCategoryColumn" editable="false" prefWidth="84.0" resizable="false" text="Category" />
-                              <TableColumn fx:id="outcomeDateColumn" prefWidth="82.0" resizable="false" text="Date" />
+                              <TableColumn fx:id="outcomeDateColumn" minWidth="0.0" prefWidth="68.0" resizable="false" text="Date" />
                           </columns>
                         </TableView>
                         <Group layoutX="641.0" layoutY="533.35498046875">
@@ -280,12 +280,12 @@
                            </font>
                         </Text>
                         <Text fx:id="outcomeCategoryText" layoutX="348.0" layoutY="658.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Category" visible="false" />
-                        <Button layoutX="308.0" layoutY="567.0" mnemonicParsing="false" onAction="#onOutcomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" text="Delete selected">
+                        <Button layoutX="296.0" layoutY="567.0" mnemonicParsing="false" onAction="#onOutcomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" text="Delete selected">
                            <font>
                               <Font name="Rockwell" size="13.0" />
                            </font>
                         </Button>
-                        <Text fx:id="outcomeSelectPositionText" fill="RED" layoutX="314.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select position" textAlignment="CENTER" visible="false" wrappingWidth="101.0341796875">
+                        <Text fx:id="outcomeSelectPositionText" fill="RED" layoutX="302.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select position" textAlignment="CENTER" visible="false" wrappingWidth="101.0341796875">
                            <font>
                               <Font name="Rockwell" size="14.0" />
                            </font>
@@ -396,7 +396,7 @@
                               <TableColumn fx:id="incomeNameColumn" editable="false" prefWidth="150.0" resizable="false" text="Name" />
                               <TableColumn fx:id="incomeValueColumn" editable="false" prefWidth="55.0" resizable="false" text="Value" />
                               <TableColumn fx:id="incomeCategoryColumn" editable="false" prefWidth="84.0" resizable="false" text="Category" />
-                              <TableColumn fx:id="incomeDateColumn" prefWidth="82.0" resizable="false" text="Date" />
+                              <TableColumn fx:id="incomeDateColumn" prefWidth="68.0" resizable="false" text="Date" />
                            </columns>
                         </TableView>
                         <Group layoutX="641.0" layoutY="533.35498046875">
@@ -438,12 +438,12 @@
                               </Text>
                            </children>
                         </Group>
-                        <Button layoutX="308.0" layoutY="567.0" mnemonicParsing="false" onAction="#onIncomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" text="Delete selected">
+                        <Button layoutX="296.0" layoutY="567.0" mnemonicParsing="false" onAction="#onIncomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" text="Delete selected">
                            <font>
                               <Font name="Rockwell" size="13.0" />
                            </font>
                         </Button>
-                        <Text fx:id="incomeSelectPositionText" fill="RED" layoutX="314.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select position" textAlignment="CENTER" visible="false" wrappingWidth="101.0341796875">
+                        <Text fx:id="incomeSelectPositionText" fill="RED" layoutX="302.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select position" textAlignment="CENTER" visible="false" wrappingWidth="101.0341796875">
                            <font>
                               <Font name="Rockwell" size="14.0" />
                            </font>

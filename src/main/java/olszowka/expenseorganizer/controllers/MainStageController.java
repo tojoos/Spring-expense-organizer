@@ -304,11 +304,11 @@ public class MainStageController implements Initializable {
             protected void updateItem(Position position, boolean empty) {
                 super.updateItem(position, empty);
                 if(position == null) {
-                    setStyle("-fx-background-color: #66CCCCFF");
+                    setStyle("-fx-text-background-color: #66CCCCFF");
                 } else if(position instanceof Income) {
-                    setStyle("-fx-background-color: #44c265");
+                    setStyle("-fx-text-background-color: #036d20");
                 } else {
-                    setStyle("-fx-background-color: #ed6d6d");
+                    setStyle("-fx-text-background-color: #e53636");
                 }
             }
         });
