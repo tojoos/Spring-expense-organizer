@@ -231,22 +231,22 @@
                         </Group>
                         <Group layoutX="49.0" layoutY="566.0">
                            <children>
-                              <Button fx:id="outcomeDTimeButton11" layoutX="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: white;" text="D">
+                              <Button fx:id="outcomeDTimeButton11" layoutX="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="D">
                                  <font>
                                     <Font name="Rockwell" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="outcomeWTimeButton11" layoutX="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: white;" text="W">
+                              <Button fx:id="outcomeWTimeButton11" layoutX="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="W">
                                  <font>
                                     <Font name="Rockwell" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="outcomeMTimeButton11" layoutX="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: white;" text="M">
+                              <Button fx:id="outcomeMTimeButton11" layoutX="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="M">
                                  <font>
                                     <Font name="Rockwell" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="outcomeYTimeButton11" layoutX="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: white;" text="Y">
+                              <Button fx:id="outcomeYTimeButton11" layoutX="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="Y">
                                  <font>
                                     <Font name="Rockwell" size="12.0" />
                                  </font>
@@ -258,7 +258,7 @@
                               </Text>
                            </children>
                         </Group>
-                        <Button fx:id="outcomeSubmitButton" layoutX="477.0" layoutY="640.0" mnemonicParsing="false" onAction="#onOutcomeSubmitButtonClicked" prefHeight="27.0" prefWidth="60.0" style="-fx-background-color: white;" text="Submit">
+                        <Button fx:id="outcomeSubmitButton" layoutX="477.0" layoutY="640.0" mnemonicParsing="false" onAction="#onOutcomeSubmitButtonClicked" prefHeight="27.0" prefWidth="60.0" text="Submit">
                            <font>
                               <Font name="Rockwell" size="13.0" />
                            </font>
@@ -280,7 +280,7 @@
                            </font>
                         </Text>
                         <Text fx:id="outcomeCategoryText" layoutX="348.0" layoutY="658.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Category" visible="false" />
-                        <Button layoutX="308.0" layoutY="567.0" mnemonicParsing="false" onAction="#onOutcomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" style="-fx-background-color: white;" text="Delete selected">
+                        <Button layoutX="308.0" layoutY="567.0" mnemonicParsing="false" onAction="#onOutcomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" text="Delete selected">
                            <font>
                               <Font name="Rockwell" size="13.0" />
                            </font>
@@ -312,22 +312,22 @@
                         </Group>
                         <Group layoutX="49.0" layoutY="566.0">
                            <children>
-                              <Button fx:id="outcomeDTimeButton1" layoutX="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: white;" text="D">
+                              <Button fx:id="outcomeDTimeButton1" layoutX="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="D">
                                  <font>
                                     <Font name="Rockwell" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="outcomeWTimeButton1" layoutX="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: white;" text="W">
+                              <Button fx:id="outcomeWTimeButton1" layoutX="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="W">
                                  <font>
                                     <Font name="Rockwell" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="outcomeMTimeButton1" layoutX="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: white;" text="M">
+                              <Button fx:id="outcomeMTimeButton1" layoutX="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="M">
                                  <font>
                                     <Font name="Rockwell" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="outcomeYTimeButton1" layoutX="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: white;" text="Y">
+                              <Button fx:id="outcomeYTimeButton1" layoutX="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="Y">
                                  <font>
                                     <Font name="Rockwell" size="12.0" />
                                  </font>
@@ -367,7 +367,7 @@
                                     <Font name="Rockwell" size="14.0" />
                                  </font>
                               </TextField>
-                              <Button layoutX="428.0" layoutY="7.94921875" mnemonicParsing="false" onAction="#onIncomeSubmitButtonClicked" prefHeight="27.0" prefWidth="60.0" style="-fx-background-color: white;" text="Submit">
+                              <Button layoutX="428.0" layoutY="7.94921875" mnemonicParsing="false" onAction="#onIncomeSubmitButtonClicked" prefHeight="27.0" prefWidth="60.0" text="Submit">
                                  <font>
                                     <Font name="Rockwell" size="13.0" />
                                  </font>
@@ -438,7 +438,7 @@
                               </Text>
                            </children>
                         </Group>
-                        <Button layoutX="308.0" layoutY="567.0" mnemonicParsing="false" onAction="#onIncomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" style="-fx-background-color: white;" text="Delete selected">
+                        <Button layoutX="308.0" layoutY="567.0" mnemonicParsing="false" onAction="#onIncomeDeleteButtonClicked" prefHeight="27.0" prefWidth="113.0" text="Delete selected">
                            <font>
                               <Font name="Rockwell" size="13.0" />
                            </font>

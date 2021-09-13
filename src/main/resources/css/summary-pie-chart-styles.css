@@ -1,9 +1,7 @@
-.data0.chart-pie
-{
+.data0.chart-pie {
     -fx-pie-color: #fa5a4d;
 }
 
-.data1.chart-pie
-{
+.data1.chart-pie {
     -fx-pie-color: #44c265;
 }
