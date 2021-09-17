@@ -45,16 +45,16 @@
     -fx-padding: 5 5 5 5;
 }
 
-.table-row-cell: hover {
+.table-row-cell:hover {
     -fx-background-color: rgba(255, 255, 255, 0.66);
     -fx-text-background-color: white;
 }
 
-.table-row-cell: odd {
+.table-row-cell:odd {
     -fx-background-color: rgba(255, 255, 255, 0.38);
 }
 
-.table-row-cell: even {
+.table-row-cell:even {
     -fx-background-color: rgba(255, 255, 255, 0.2);
 }
 

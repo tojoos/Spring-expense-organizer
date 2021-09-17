@@ -32,7 +32,7 @@ public class MainStageController implements Initializable {
     private final IncomeService incomeService;
     private final OutcomeService outcomeService;
     private final ValidationService validationService;
-    private final DataController dataController;
+    private final DataService dataService;
     private final ObservableList<Outcome> outcomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Income> incomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Position> summaryObservableList = FXCollections.observableArrayList();
@@ -83,11 +83,11 @@ public class MainStageController implements Initializable {
     @FXML
     private ProgressBar budgetProgressionBar;
 
-    public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService, JSONParserService jsonParserService) throws IOException, ParseException {
+    public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService, JSONParserService jsonParserService) throws IOException {
         this.incomeService = incomeService;
         this.outcomeService = outcomeService;
         this.validationService = validationService;
-        this.dataController = new DataController(jsonParserService);
+        this.dataService = new DataService(jsonParserService);
     }
 
     @Override
@@ -151,29 +151,29 @@ public class MainStageController implements Initializable {
     }
 
     private void saveIncomesDataFiles() {
-        dataController.saveIncomes(incomeService.getAllPositions());
+        dataService.saveIncomes(incomeService.getAllPositions());
     }
 
     private void saveOutcomesDataFiles() {
-        dataController.saveOutcomes(outcomeService.getAllPositions());
+        dataService.saveOutcomes(outcomeService.getAllPositions());
     }
 
     private void saveBudgetFiles() throws IOException {
-        dataController.saveBudget(budgetValue);
+        dataService.saveBudget(budgetValue);
     }
 
     private void updateIncomesDataFiles() throws IOException, ParseException {
         incomeService.clearAllPositions();
-        dataController.getIncomes().forEach(incomeService::addPosition);
+        dataService.getIncomes().forEach(incomeService::addPosition);
     }
 
     private void updateOutcomesDataFiles() throws IOException, ParseException {
         outcomeService.clearAllPositions();
-        dataController.getOutcomes().forEach(outcomeService::addPosition);
+        dataService.getOutcomes().forEach(outcomeService::addPosition);
     }
 
     private void updateBudget() throws IOException {
-        double newBudget = dataController.getBudget();
+        double newBudget = dataService.getBudget();
         if(newBudget != 0)
             budgetValue = newBudget;
     }

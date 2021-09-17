@@ -1,8 +1,7 @@
-package olszowka.expenseorganizer.controllers;
+package olszowka.expenseorganizer.services;
 
 import olszowka.expenseorganizer.model.Income;
 import olszowka.expenseorganizer.model.Outcome;
-import olszowka.expenseorganizer.services.JSONParserService;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +9,7 @@ import java.io.*;
 import java.util.List;
 
 @Component
-public class DataController {
+public class DataService {
     private File incomesFile;
     private File outcomesFile;
     private File budgetFile;
@@ -19,7 +18,7 @@ public class DataController {
 
     private final JSONParserService jsonParserService;
 
-    public DataController(JSONParserService jsonParserService) throws IOException {
+    public DataService(JSONParserService jsonParserService) throws IOException {
         this.jsonParserService = jsonParserService;
         initializeFiles();
     }
