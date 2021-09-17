@@ -16,9 +16,10 @@ _Desktop application made with Spring and JavaFX to help you manage your funds s
 - [ ] Adding pane for investments
 - [ ] Css styling for better UX
 
+
 #### Preview:
-![summary page](https://user-images.githubusercontent.com/79639840/132995986-f781ee8b-3963-4dad-b726-0930680a5629.png)
+![summary page](https://user-images.githubusercontent.com/79639840/133679942-f66c08d4-ee5a-4031-89e2-6de9826c60a2.png)
 
-![outcomes](https://user-images.githubusercontent.com/79639840/132995984-a21b2953-e7a5-4d54-ae12-128688f73f9d.png)
+![outcomes](https://user-images.githubusercontent.com/79639840/133680010-d9e1ebf5-7145-48b7-82b2-6d363c2dfc7a.png)
 
-![Budget setting](https://user-images.githubusercontent.com/79639840/132995973-45b8a9ff-0178-40d4-b2b5-ae659740495c.png)
+![Budget setting](https://user-images.githubusercontent.com/79639840/133679981-e4e04b42-ccf6-4e64-b4fe-6bc69daa9353.png)
