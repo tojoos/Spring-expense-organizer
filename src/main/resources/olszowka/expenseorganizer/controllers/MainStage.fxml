@@ -263,7 +263,7 @@
                               <Font name="Rockwell" size="13.0" />
                            </font>
                         </Button>
-                        <ComboBox fx:id="outcomeCategoryComboBox" layoutX="340.0" layoutY="640.0" prefHeight="27.0" prefWidth="126.0" promptText="Category" style="-fx-background-color: white;" visibleRowCount="6" />
+                        <ComboBox fx:id="outcomeCategoryComboBox" layoutX="340.0" layoutY="640.0" prefHeight="27.0" prefWidth="126.0" promptText="Category" visibleRowCount="6" />
                         <Text fx:id="outcomeSelectCategoryText" fill="RED" layoutX="357.0" layoutY="681.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select category" visible="false">
                            <font>
                               <Font name="Rockwell" size="13.0" />
@@ -372,7 +372,7 @@
                                     <Font name="Rockwell" size="13.0" />
                                  </font>
                               </Button>
-                              <ComboBox fx:id="incomeCategoryComboBox" layoutX="291.0" layoutY="7.94921875" prefHeight="27.0" prefWidth="126.0" promptText="Category" style="-fx-background-color: white;" visibleRowCount="6" />
+                              <ComboBox fx:id="incomeCategoryComboBox" layoutX="291.0" layoutY="7.94921875" prefHeight="27.0" prefWidth="126.0" promptText="Category" visibleRowCount="6" />
                               <Text fx:id="incomeSelectCategoryText" fill="RED" layoutX="308.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select category" visible="false">
                                  <font>
                                     <Font name="Rockwell" size="13.0" />
