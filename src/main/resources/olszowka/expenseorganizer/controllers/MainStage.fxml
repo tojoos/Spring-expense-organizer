@@ -159,7 +159,7 @@
                         <Group layoutX="491.0" layoutY="70.0">
                            <children>
                               <PieChart fx:id="outcomePieChart" layoutY="31.0" legendVisible="false" prefHeight="434.0" prefWidth="766.0" />
-                              <Text fill="WHITE" layoutX="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Breakdown of expenses" textAlignment="CENTER" wrappingWidth="424.392578125">
+                              <Text fill="WHITE" layoutX="171.0" layoutY="-1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Breakdown of expenses" textAlignment="CENTER" wrappingWidth="424.392578125">
                                  <font>
                                     <Font name="Rockwell" size="25.0" />
                                  </font>
@@ -184,10 +184,10 @@
                         </TextField>
                         <TableView fx:id="outcomeTableView" layoutX="49.0" layoutY="126.0" prefHeight="439.0" prefWidth="372.0">
                           <columns>
-                            <TableColumn fx:id="outcomeNameColumn" editable="false" prefWidth="150.0" resizable="false" text="Name" />
-                            <TableColumn fx:id="outcomeValueColumn" editable="false" prefWidth="55.0" resizable="false" text="Value" />
-                              <TableColumn fx:id="outcomeCategoryColumn" editable="false" prefWidth="84.0" resizable="false" text="Category" />
-                              <TableColumn fx:id="outcomeDateColumn" minWidth="0.0" prefWidth="68.0" resizable="false" text="Date" />
+                            <TableColumn fx:id="outcomeNameColumn" editable="false" prefWidth="127.0" resizable="false" text="Name" />
+                            <TableColumn fx:id="outcomeValueColumn" editable="false" prefWidth="70.0" resizable="false" text="Value" />
+                              <TableColumn fx:id="outcomeCategoryColumn" editable="false" resizable="false" text="Category" />
+                              <TableColumn fx:id="outcomeDateColumn" minWidth="0.0" prefWidth="77.0" resizable="false" text="Date" />
                           </columns>
                         </TableView>
                         <Group layoutX="641.0" layoutY="533.35498046875">
@@ -342,7 +342,7 @@
                         <Group layoutX="491.0" layoutY="70.0">
                            <children>
                               <PieChart fx:id="incomePieChart" layoutY="31.0" legendVisible="false" prefHeight="434.0" prefWidth="766.0" />
-                              <Text fill="WHITE" layoutX="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Breakdown of incomes" textAlignment="CENTER" wrappingWidth="424.392578125">
+                              <Text fill="WHITE" layoutX="171.0" layoutY="-1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Breakdown of incomes" textAlignment="CENTER" wrappingWidth="424.392578125">
                                  <font>
                                     <Font name="Rockwell" size="25.0" />
                                  </font>
@@ -393,10 +393,10 @@
                         </Group>
                         <TableView fx:id="incomeTableView" layoutX="49.0" layoutY="126.0" prefHeight="439.0" prefWidth="372.0">
                            <columns>
-                              <TableColumn fx:id="incomeNameColumn" editable="false" prefWidth="150.0" resizable="false" text="Name" />
-                              <TableColumn fx:id="incomeValueColumn" editable="false" prefWidth="55.0" resizable="false" text="Value" />
-                              <TableColumn fx:id="incomeCategoryColumn" editable="false" prefWidth="84.0" resizable="false" text="Category" />
-                              <TableColumn fx:id="incomeDateColumn" prefWidth="68.0" resizable="false" text="Date" />
+                              <TableColumn fx:id="incomeNameColumn" editable="false" prefWidth="127.0" resizable="false" text="Name" />
+                              <TableColumn fx:id="incomeValueColumn" editable="false" prefWidth="70.0" resizable="false" text="Value" />
+                              <TableColumn fx:id="incomeCategoryColumn" editable="false" resizable="false" text="Category" />
+                              <TableColumn fx:id="incomeDateColumn" prefWidth="77.0" resizable="false" text="Date" />
                            </columns>
                         </TableView>
                         <Group layoutX="641.0" layoutY="533.35498046875">

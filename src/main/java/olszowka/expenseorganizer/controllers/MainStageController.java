@@ -98,6 +98,7 @@ public class MainStageController implements Initializable {
         try {
             updateIncomesDataFiles();
             updateOutcomesDataFiles();
+            updateBudget();
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -129,9 +130,10 @@ public class MainStageController implements Initializable {
     }
 
     @FXML
-    private void summaryBudgetSubmitButtonClicked() {
+    private void summaryBudgetSubmitButtonClicked() throws IOException {
         if(validationService.isValueValid(summaryBudgetTextField.getText())) {
             budgetValue = Double.parseDouble(summaryBudgetTextField.getText());
+            saveBudgetFiles();
             updateBudgetProgressionBar();
             summaryBudgetText.setText(outcomeService.calculateTotalAmount() + "/" + budgetValue + " zł");
             summaryWrongBudgetValuePromptText.setVisible(false);
@@ -156,6 +158,10 @@ public class MainStageController implements Initializable {
         dataController.saveOutcomes(outcomeService.getAllPositions());
     }
 
+    private void saveBudgetFiles() throws IOException {
+        dataController.saveBudget(budgetValue);
+    }
+
     private void updateIncomesDataFiles() throws IOException, ParseException {
         incomeService.clearAllPositions();
         dataController.getIncomes().forEach(incomeService::addPosition);
@@ -164,6 +170,12 @@ public class MainStageController implements Initializable {
     private void updateOutcomesDataFiles() throws IOException, ParseException {
         outcomeService.clearAllPositions();
         dataController.getOutcomes().forEach(outcomeService::addPosition);
+    }
+
+    private void updateBudget() throws IOException {
+        double newBudget = dataController.getBudget();
+        if(newBudget != 0)
+            budgetValue = newBudget;
     }
 
     private void updatePieCharts() {
