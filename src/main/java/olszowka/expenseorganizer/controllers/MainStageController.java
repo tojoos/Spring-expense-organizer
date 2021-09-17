@@ -83,11 +83,11 @@ public class MainStageController implements Initializable {
     @FXML
     private ProgressBar budgetProgressionBar;
 
-    public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService, JSONParserService jsonParserService) throws IOException {
+    public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService, DataService dataService) {
         this.incomeService = incomeService;
         this.outcomeService = outcomeService;
         this.validationService = validationService;
-        this.dataService = new DataService(jsonParserService);
+        this.dataService = dataService;
     }
 
     @Override

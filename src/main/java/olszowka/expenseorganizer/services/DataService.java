@@ -3,12 +3,12 @@ package olszowka.expenseorganizer.services;
 import olszowka.expenseorganizer.model.Income;
 import olszowka.expenseorganizer.model.Outcome;
 import org.json.simple.parser.ParseException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.List;
 
-@Component
+@Service
 public class DataService {
     private File incomesFile;
     private File outcomesFile;
@@ -39,7 +39,6 @@ public class DataService {
 
     private void initializeFiles() throws IOException {
         this.positionsDirectory = new File("src/main/resources/data/json");
-
         if(positionsDirectory.mkdirs()) {
             System.out.println("Data directory successfully created.");
         } else {
