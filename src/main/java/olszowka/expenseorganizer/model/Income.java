@@ -4,10 +4,6 @@ import java.time.LocalDate;
 
 public class Income extends Position {
 
-    public Income() {
-
-    }
-
     public Income(String name, String value, String category) {
         super(name, value, category);
     }
@@ -16,3 +12,4 @@ public class Income extends Position {
         super(name, value, category, date);
     }
 }
+

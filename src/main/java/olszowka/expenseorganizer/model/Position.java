@@ -1,16 +1,19 @@
 package olszowka.expenseorganizer.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public abstract class Position {
     private String name;
     private String value;
     private String category;
     private LocalDate date;
-
-    public Position() {
-
-    }
 
     public Position(String name, String value, String category) {
         this.name = name;
@@ -24,37 +27,5 @@ public abstract class Position {
         this.value = value;
         this.category = category;
         this.date = date;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate localDate) {
-        this.date = localDate;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 }
