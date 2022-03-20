@@ -36,7 +36,7 @@ public class MainStageController implements Initializable {
     private final ObservableList<Outcome> outcomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Income> incomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Position> summaryObservableList = FXCollections.observableArrayList();
-    private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Traveling", "Other");
+    private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Traveling", "Education", "Other");
     private final List<String> incomeListOfCategories = Arrays.asList("Primary Job", "Part Time Job", "Scholarship", "Investments", "Cashback");
     private static final double DEFAULT_BUDGET = 5000.0;
 
