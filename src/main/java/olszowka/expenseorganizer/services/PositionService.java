@@ -2,6 +2,7 @@ package olszowka.expenseorganizer.services;
 
 import olszowka.expenseorganizer.model.Position;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,6 @@ public abstract class PositionService<T extends Position> {
         for(T o : getAllPositions()) {
             sum += Double.parseDouble(o.getValue());
         }
-        return String.valueOf(sum);
+        return (new DecimalFormat("###.##").format(sum).replace(",", "."));
     }
 }

@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
 @Service
 public class ValidationService {
     public boolean isValueValid(String value) {
-        return value.matches("(\\d{0,10}$)|(\\d{0,10}\\.(\\d){0,2}$)") && !value.matches("");
+        return value.matches("(\\d{0,10}$)|(\\d{0,10}([,.])(\\d){0,2}$)") && !value.matches("");
     }
 
     public boolean isNameValid(String name) {
@@ -15,6 +15,7 @@ public class ValidationService {
     }
 
     public String returnFormattedValue(String sum) {
+        sum = sum.replace(",", ".");
         Double doubleSum = Double.parseDouble(sum);
         DecimalFormat myFormatter = new DecimalFormat("###.##");
         String totalValue = myFormatter.format(doubleSum);
