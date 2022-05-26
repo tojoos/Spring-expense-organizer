@@ -68,6 +68,7 @@ public class JSONParserService {
             JSONArray positions = (JSONArray) jsonParser.parse(reader);
             positions.forEach(position -> incomes.add(parseJSONToIncome((JSONObject) position)));
         }
+        reader.close();
         return incomes;
     }
 
@@ -80,6 +81,7 @@ public class JSONParserService {
             JSONArray positions = (JSONArray) jsonParser.parse(reader);
             positions.forEach(position -> outcomes.add(parseJSONToOutcome((JSONObject) position)));
         }
+        reader.close();
         return outcomes;
     }
 
