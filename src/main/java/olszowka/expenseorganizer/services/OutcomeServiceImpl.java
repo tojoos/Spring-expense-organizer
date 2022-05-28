@@ -18,6 +18,11 @@ public class OutcomeServiceImpl extends PositionService<Outcome> implements Outc
     }
 
     @Override
+    public void addAllPositions(List<Outcome> positions) {
+        super.addAllPositions(positions);
+    }
+
+    @Override
     public void deletePosition(Outcome position) {
         super.deletePosition(position);
     }

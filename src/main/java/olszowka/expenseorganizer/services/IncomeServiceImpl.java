@@ -28,6 +28,11 @@ public class IncomeServiceImpl extends PositionService<Income> implements Income
     }
 
     @Override
+    public void addAllPositions(List<Income> positions) {
+        super.addAllPositions(positions);
+    }
+
+    @Override
     public String calculateTotalAmount() {
         return super.calculateTotalAmount();
     }

@@ -17,6 +17,10 @@ public abstract class PositionService<T extends Position> {
         positions.add(position);
     }
 
+    void addAllPositions(List<T> positionList) {
+        this.positions.addAll(positionList);
+    }
+
     void deletePosition(T position) {
         positions.remove(position);
     }

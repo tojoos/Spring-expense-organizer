@@ -9,6 +9,8 @@ public interface CrudService<T extends Position> {
 
     void addPosition(T position);
 
+    void addAllPositions(List<T> positions);
+
     void deletePosition(T position);
 
     void clearAllPositions();
