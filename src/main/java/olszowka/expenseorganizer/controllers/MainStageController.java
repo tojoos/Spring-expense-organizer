@@ -16,12 +16,14 @@ import net.rgielen.fxweaver.core.FxmlView;
 import olszowka.expenseorganizer.model.Income;
 import olszowka.expenseorganizer.model.Outcome;
 import olszowka.expenseorganizer.model.Position;
+import olszowka.expenseorganizer.model.Timeframe;
 import olszowka.expenseorganizer.services.*;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -33,11 +35,13 @@ public class MainStageController implements Initializable {
     private final OutcomeService outcomeService;
     private final ValidationService validationService;
     private final DataService dataService;
+    private final CalculationService calculationService;
     private final ObservableList<Outcome> outcomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Income> incomeObservableList = FXCollections.observableArrayList();
     private final ObservableList<Position> summaryObservableList = FXCollections.observableArrayList();
     private final List<String> outcomeListOfCategories = Arrays.asList("Food", "Entertainment", "Fitness", "Clothes", "Traveling", "Education", "Other");
     private final List<String> incomeListOfCategories = Arrays.asList("Primary Job", "Part Time Job", "Scholarship", "Investments", "Cashback");
+    private final List<String> listOfPeriods = Arrays.asList("Day", "Week", "Month", "All");
     private static final double DEFAULT_BUDGET = 5000.0;
 
     @FXML
@@ -68,14 +72,14 @@ public class MainStageController implements Initializable {
             incomeSelectCategoryText, incomeWrongValueText, incomeNameRequiredText, outcomeNameRequiredText,
             outcomeCategoryText, incomeCategoryText, outcomeSelectPositionText, incomeSelectPositionText,
             summaryTotalSumText, summarySubmittedPromptText, summaryWrongBudgetValuePromptText, summaryBudgetText,
-            budgetProgressionText;
+            budgetProgressionText, outcomePeriodStringText, incomePeriodStringText;
 
     @FXML
     private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField,
             summaryBudgetTextField;
 
     @FXML
-    private ComboBox<String> outcomeCategoryComboBox, incomeCategoryComboBox;
+    private ComboBox<String> outcomeCategoryComboBox, incomeCategoryComboBox, periodComboBox;
 
     @FXML
     private PieChart outcomePieChart, incomePieChart, summaryPieChart;
@@ -83,17 +87,19 @@ public class MainStageController implements Initializable {
     @FXML
     private ProgressBar budgetProgressionBar;
 
-    public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService, DataService dataService) {
+    public MainStageController(IncomeService incomeService, OutcomeService outcomeService, ValidationService validationService, DataService dataService, CalculationService calculationService) {
         this.incomeService = incomeService;
         this.outcomeService = outcomeService;
         this.validationService = validationService;
         this.dataService = dataService;
+        this.calculationService = calculationService;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         outcomeCategoryComboBox.getItems().addAll(outcomeListOfCategories);
         incomeCategoryComboBox.getItems().addAll(incomeListOfCategories);
+        periodComboBox.getItems().addAll(listOfPeriods);
 
         try {
             updateIncomesDataFiles();
@@ -106,6 +112,7 @@ public class MainStageController implements Initializable {
         initializeListeners();
         initializeTableViews();
         updatePieCharts();
+        preparePeriodString();
 
         initializeSummaryBudgetPane();
     }
@@ -268,7 +275,7 @@ public class MainStageController implements Initializable {
         } else {
             summaryTotalSumText.setFill(Paint.valueOf("#ff1a00"));
         }
-        summaryTotalSumText.setText(totalSum + " zł");
+        summaryTotalSumText.setText(new DecimalFormat("0.00").format(totalSum).replace(",", ".") + " zł");
     }
 
     private void initializeTextFieldsListeners(TextField NameTextField,
@@ -393,6 +400,8 @@ public class MainStageController implements Initializable {
            clearPositionAfterSubmitted(outcomeObservableList, outcomeService, outcomeTableView, outcomeCategoryComboBox,
                                        outcomeNameTextField, outcomeValueTextField, outcomeNameRequiredText, outcomeWrongValueText, outcomeSelectCategoryText);
 
+            preparePositionsBasedOnTimeframe();
+
             wasSubmitted = true;
         }
 
@@ -416,6 +425,9 @@ public class MainStageController implements Initializable {
 
            clearPositionAfterSubmitted(incomeObservableList, incomeService, incomeTableView, incomeCategoryComboBox,
                                        incomeNameTextField, incomeValueTextField, incomeNameRequiredText, incomeWrongValueText, incomeSelectCategoryText);
+
+            preparePositionsBasedOnTimeframe();
+
             wasSubmitted = true;
         }
 
@@ -478,4 +490,47 @@ public class MainStageController implements Initializable {
         positionTableView.sort();
     }
 
+    @FXML
+    private void onPeriodComboBoxButtonClicked() {
+        preparePositionsBasedOnTimeframe();
+        preparePeriodString();
+    }
+
+    private void preparePositionsBasedOnTimeframe() {
+        Timeframe selectedTimeframe = getTimeFrameBasedOnIndex(periodComboBox.getSelectionModel().getSelectedIndex());
+
+        List<Income> allIncomes = incomeService.getAllPositions();
+        List<Outcome> allOutcomes = outcomeService.getAllPositions();
+        incomeObservableList.clear();
+        outcomeObservableList.clear();
+        summaryObservableList.clear();
+        List<Income> filteredIncomes = calculationService.getPeriodicPositions(allIncomes, selectedTimeframe);
+        List<Outcome> filteredOutcomes = calculationService.getPeriodicPositions(allOutcomes, selectedTimeframe);
+        incomeObservableList.addAll(filteredIncomes);
+        outcomeObservableList.addAll(filteredOutcomes);
+        summaryObservableList.addAll(filteredIncomes);
+        summaryObservableList.addAll(filteredOutcomes);
+    }
+
+    private void preparePeriodString() {
+        Timeframe selectedTimeframe = getTimeFrameBasedOnIndex(periodComboBox.getSelectionModel().getSelectedIndex());
+
+        incomePeriodStringText.setText(
+                calculationService.returnTimeframeString(selectedTimeframe));
+        outcomePeriodStringText.setText(
+                calculationService.returnTimeframeString(selectedTimeframe));
+    }
+
+    private Timeframe getTimeFrameBasedOnIndex(int indexOfItem) {
+        switch (indexOfItem) {
+            case 0:
+                return Timeframe.DAY;
+            case 1:
+                return Timeframe.WEEK;
+            case 2:
+                return Timeframe.MONTH;
+            default:
+                return Timeframe.ALL;
+        }
+    }
 }
