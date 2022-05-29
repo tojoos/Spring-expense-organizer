@@ -39,7 +39,7 @@ public class CalculationService {
     }
 
     public String returnTimeframeString(Timeframe timeframe) {
-        String timeframeString = "";
+        String timeframeString;
         LocalDate dateToFormat = getDateForPeriod(timeframe);
         timeframeString = dateToFormat.equals(LocalDate.EPOCH) ? "01-01-2022" : dateToFormat.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         timeframeString = timeframeString.concat(" - " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
