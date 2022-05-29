@@ -16,4 +16,6 @@ public interface CrudService<T extends Position> {
     void clearAllPositions();
 
     String calculateTotalAmount();
+
+    String calculateTotalAmountForPositions(List<T> positions);
 }

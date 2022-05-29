@@ -36,4 +36,12 @@ public abstract class PositionService<T extends Position> {
         }
         return (new DecimalFormat("###.##").format(sum).replace(",", "."));
     }
+
+    String calculateTotalAmountForPositions(List<T> positions) {
+        double sum = 0;
+        for(T o : positions) {
+            sum += Double.parseDouble(o.getValue());
+        }
+        return (new DecimalFormat("###.##").format(sum).replace(",", "."));
+    }
 }

@@ -1,6 +1,7 @@
 package olszowka.expenseorganizer.services;
 
 import olszowka.expenseorganizer.model.Income;
+import olszowka.expenseorganizer.model.Outcome;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +36,10 @@ public class IncomeServiceImpl extends PositionService<Income> implements Income
     @Override
     public String calculateTotalAmount() {
         return super.calculateTotalAmount();
+    }
+
+    @Override
+    public String calculateTotalAmountForPositions(List<Income> incomes) {
+        return super.calculateTotalAmountForPositions(incomes);
     }
 }

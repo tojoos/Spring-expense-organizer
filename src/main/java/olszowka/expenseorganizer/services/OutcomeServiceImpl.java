@@ -36,4 +36,9 @@ public class OutcomeServiceImpl extends PositionService<Outcome> implements Outc
     public String calculateTotalAmount() {
         return super.calculateTotalAmount();
     }
+
+    @Override
+    public String calculateTotalAmountForPositions(List<Outcome> outcomes) {
+        return super.calculateTotalAmountForPositions(outcomes);
+    }
 }
