@@ -38,6 +38,12 @@ public class DataService {
     }
 
     private void initializeFiles() throws IOException {
+        createDirectories();
+
+        createPositionFiles();
+    }
+
+    private void createDirectories() {
         this.positionsDirectory = new File("src/main/resources/data/json");
         if(positionsDirectory.mkdirs()) {
             System.out.println("Data directory successfully created.");
@@ -52,7 +58,9 @@ public class DataService {
         } else {
             System.out.println("Budget directory already exists.");
         }
+    }
 
+    private void createPositionFiles() throws IOException {
         this.incomesFile = new File("src/main/resources/data/json/incomesData.json");
 
         if(incomesFile.createNewFile()) {
