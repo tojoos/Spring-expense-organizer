@@ -246,7 +246,7 @@ public class MainStageController implements Initializable {
             updateSummaryPieChart();
         });
         summaryObservableList.addListener((ListChangeListener<Position>) change -> {
-            updateSummaryTotalSumText();
+            updateSummaryTotalSumTextField();
             updateBudgetProgressionBar();
             summaryBudgetText.setText(outcomeService.calculateTotalAmount() + "/" + budgetValue + " zł");
         });
@@ -266,16 +266,6 @@ public class MainStageController implements Initializable {
             budgetProgressionBar.setProgress(progression);
             budgetProgressionText.setText(Math.round(progression*100) + "%");
         }
-    }
-
-    private void updateSummaryTotalSumText() {
-        double totalSum = Double.parseDouble(incomeService.calculateTotalAmount()) - Double.parseDouble(outcomeService.calculateTotalAmount());
-        if(totalSum >= 0) {
-            summaryTotalSumText.setFill(Paint.valueOf("#10b244"));
-        } else {
-            summaryTotalSumText.setFill(Paint.valueOf("#ff1a00"));
-        }
-        summaryTotalSumText.setText(new DecimalFormat("0.00").format(totalSum).replace(",", ".") + " zł");
     }
 
     private void initializeTextFieldsListeners(TextField NameTextField,
@@ -351,13 +341,31 @@ public class MainStageController implements Initializable {
         tableView.getSortOrder().add(sortedTableColumn);
     }
 
+    private void updateSummaryTotalSumTextField() {
+        Timeframe selectedTimeframe = getTimeFrameBasedOnIndex(periodComboBox.getSelectionModel().getSelectedIndex());
+        List<Income> currentIncomeList = calculationService.getPeriodicPositions(incomeService.getAllPositions(), selectedTimeframe);
+        List<Outcome> currentOutcomeList = calculationService.getPeriodicPositions(outcomeService.getAllPositions(), selectedTimeframe);
+
+        double totalSum = Double.parseDouble(incomeService.calculateTotalAmountForPositions(currentIncomeList)) - Double.parseDouble(outcomeService.calculateTotalAmountForPositions(currentOutcomeList));
+        if(totalSum >= 0) {
+            summaryTotalSumText.setFill(Paint.valueOf("#10b244"));
+        } else {
+            summaryTotalSumText.setFill(Paint.valueOf("#ff1a00"));
+        }
+        summaryTotalSumText.setText(new DecimalFormat("0.00").format(totalSum).replace(",", ".") + " zł");
+    }
+
     private void updateOutcomeTotalSumTextField() {
-        String totalValue = validationService.returnFormattedValue(outcomeService.calculateTotalAmount());
+        Timeframe selectedTimeframe = getTimeFrameBasedOnIndex(periodComboBox.getSelectionModel().getSelectedIndex());
+        List<Outcome> currentOutcomeList = calculationService.getPeriodicPositions(outcomeService.getAllPositions(), selectedTimeframe);
+        String totalValue = validationService.returnFormattedValue(outcomeService.calculateTotalAmountForPositions(currentOutcomeList));
         Platform.runLater(() -> outcomeTotalSumText.setText("-" + totalValue + " zł"));
     }
 
     private void updateIncomeTotalSumTextField() {
-        String totalValue = validationService.returnFormattedValue(incomeService.calculateTotalAmount());
+        Timeframe selectedTimeframe = getTimeFrameBasedOnIndex(periodComboBox.getSelectionModel().getSelectedIndex());
+        List<Income> currentIncomeList = calculationService.getPeriodicPositions(incomeService.getAllPositions(), selectedTimeframe);
+        String totalValue = validationService.returnFormattedValue(incomeService.calculateTotalAmountForPositions(currentIncomeList));
         Platform.runLater(() -> incomeTotalSumText.setText("+" + totalValue + " zł"));
     }
 
