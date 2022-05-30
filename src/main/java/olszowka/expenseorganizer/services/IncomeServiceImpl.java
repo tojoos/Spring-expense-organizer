@@ -1,7 +1,6 @@
 package olszowka.expenseorganizer.services;
 
 import olszowka.expenseorganizer.model.Income;
-import olszowka.expenseorganizer.model.Outcome;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
