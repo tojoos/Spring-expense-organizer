@@ -148,11 +148,6 @@
                                     <Font name="Rockwell" size="25.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="outcomePeriodStringText" fill="WHITE" layoutX="28.0" layoutY="29.40380859375" strokeType="OUTSIDE" strokeWidth="0.0" text="18.08.2021 - 18.09.2021">
-                                 <font>
-                                    <Font name="Rockwell" size="14.0" />
-                                 </font>
-                              </Text>
                            </children>
                         </Group>
                         <Group layoutX="280.0" layoutY="581.8671875" />
@@ -170,6 +165,7 @@
                                     <Font name="Rockwell" size="25.0" />
                                  </font>
                               </Text>
+                              <PieChart fx:id="outcomePieChart1" layoutX="10.0" layoutY="41.0" legendVisible="false" prefHeight="434.0" prefWidth="766.0" />
                            </children>
                         </Group>
                         <TextField fx:id="outcomeNameTextField" layoutX="49.0" layoutY="639.0" prefHeight="30.0" prefWidth="140.0" promptText="Name">
@@ -290,6 +286,11 @@
                               <Font name="Rockwell" size="14.0" />
                            </font>
                         </Text>
+                        <Text fx:id="outcomePeriodStringText" fill="WHITE" layoutX="130.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="18.08.2021 - 18.09.2021" textAlignment="CENTER" wrappingWidth="200.0">
+                           <font>
+                              <Font name="Rockwell" size="14.0" />
+                           </font>
+                        </Text>
                      </children></AnchorPane>
                </content></Tab>
             <Tab text="Incomes">
@@ -301,11 +302,6 @@
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Recent incomes" textAlignment="CENTER" wrappingWidth="206.392578125">
                                  <font>
                                     <Font name="Rockwell" size="25.0" />
-                                 </font>
-                              </Text>
-                              <Text fx:id="incomePeriodStringText" fill="WHITE" layoutX="28.0" layoutY="29.40380859375" strokeType="OUTSIDE" strokeWidth="0.0" text="18.08.2021 - 18.09.2021">
-                                 <font>
-                                    <Font name="Rockwell" size="14.0" />
                                  </font>
                               </Text>
                            </children>
@@ -444,6 +440,11 @@
                            </font>
                         </Button>
                         <Text fx:id="incomeSelectPositionText" fill="RED" layoutX="302.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select position" textAlignment="CENTER" visible="false" wrappingWidth="101.0341796875">
+                           <font>
+                              <Font name="Rockwell" size="14.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="incomePeriodStringText" fill="WHITE" layoutX="135.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="18.08.2021 - 18.09.2021" textAlignment="CENTER" wrappingWidth="200.0">
                            <font>
                               <Font name="Rockwell" size="14.0" />
                            </font>

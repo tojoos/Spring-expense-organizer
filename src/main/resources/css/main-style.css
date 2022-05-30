@@ -40,6 +40,10 @@
     -fx-font-size: 13;
 }
 
+.table-view .column-header .arrow {
+    -fx-background-color: white;
+}
+
 .table-view .table-cell {
     -fx-border-color: transparent;
     -fx-padding: 5 5 5 5;
