@@ -581,4 +581,24 @@ public class MainStageController implements Initializable {
         outcomePreviousSumText.setText(validationService.returnFormattedValue(previousOutcomes) + " zł");
         outcomeChangeSumText.setText(validationService.returnFormattedValue(changeOutcomes) + " zł");
     }
+
+    @FXML
+    private void onDTimeButtonClicked() {
+        periodComboBox.getSelectionModel().select(Timeframe.DAY.getIdx());
+    }
+
+    @FXML
+    private void onWTimeButtonClicked() {
+        periodComboBox.getSelectionModel().select(Timeframe.WEEK.getIdx());
+    }
+
+    @FXML
+    private void onMTimeButtonClicked() {
+        periodComboBox.getSelectionModel().select(Timeframe.MONTH.getIdx());
+    }
+
+    @FXML
+    private void onAllTimeButtonClicked() {
+        periodComboBox.getSelectionModel().select(Timeframe.ALL.getIdx());
+    }
 }
