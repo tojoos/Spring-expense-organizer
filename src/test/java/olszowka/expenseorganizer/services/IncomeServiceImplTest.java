@@ -86,4 +86,37 @@ class IncomeServiceImplTest {
         //then
         assertEquals(actualSum, Double.parseDouble(returnedSum));
     }
+
+    @Test
+    void addAllPositions() {
+        //given
+        List<Income> incomesToAdd = new ArrayList<>();
+        Income income1 = new Income("sth", "100.00", "Other", LocalDate.now());
+        Income income2 = new Income("sth different", "1000.00", "Other", LocalDate.now());
+        incomesToAdd.add(income1);
+        incomesToAdd.add(income2);
+
+        //when
+        incomeService.addAllPositions(incomesToAdd);
+
+        //then
+        assertEquals(incomesToAdd.size() + incomes.size(), incomeService.getAllPositions().size());
+        assertEquals(income2.getCategory(), incomeService.getAllPositions().get(incomesToAdd.size() + incomes.size() - 1).getCategory());
+    }
+
+    @Test
+    void calculateTotalAmountForPositions() {
+        //given
+        List<Income> incomesToCalculate = new ArrayList<>();
+        Income income1 = new Income("sth", "100.00", "Other", LocalDate.now());
+        Income income2 = new Income("sth different", "1000.99", "Other", LocalDate.now());
+        incomesToCalculate.add(income1);
+        incomesToCalculate.add(income2);
+
+        //when
+        String calculatedAmount = incomeService.calculateTotalAmountForPositions(incomesToCalculate);
+
+        //then
+        assertEquals(Double.parseDouble(income1.getValue()) + Double.parseDouble(income2.getValue()), Double.parseDouble(calculatedAmount));
+    }
 }

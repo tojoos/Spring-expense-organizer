@@ -1,5 +1,6 @@
 package olszowka.expenseorganizer.services;
 
+import olszowka.expenseorganizer.model.Income;
 import olszowka.expenseorganizer.model.Outcome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -85,5 +86,38 @@ class OutcomeServiceImplTest {
 
         //then
         assertEquals(actualSum, Double.parseDouble(returnedSum));
+    }
+
+    @Test
+    void addAllPositions() {
+        //given
+        List<Outcome> outcomesToAdd = new ArrayList<>();
+        Outcome outcome1 = new Outcome("sth", "100.00", "Other", LocalDate.now());
+        Outcome outcome2 = new Outcome("sth different", "1000.00", "Food", LocalDate.now());
+        outcomesToAdd.add(outcome1);
+        outcomesToAdd.add(outcome2);
+
+        //when
+        outcomeService.addAllPositions(outcomesToAdd);
+
+        //then
+        assertEquals(outcomesToAdd.size() + outcomes.size(), outcomeService.getAllPositions().size());
+        assertEquals(outcome2.getCategory(), outcomeService.getAllPositions().get(outcomesToAdd.size() + outcomes.size() - 1).getCategory());
+    }
+
+    @Test
+    void calculateTotalAmountForPositions() {
+        //given
+        List<Outcome> outcomeToCalculate = new ArrayList<>();
+        Outcome outcome1 = new Outcome("sth", "99.99", "Other", LocalDate.now());
+        Outcome outcome2 = new Outcome("sth different", "1000.00", "Other", LocalDate.now());
+        outcomeToCalculate.add(outcome1);
+        outcomeToCalculate.add(outcome2);
+
+        //when
+        String calculatedAmount = outcomeService.calculateTotalAmountForPositions(outcomeToCalculate);
+
+        //then
+        assertEquals(Double.parseDouble(outcome1.getValue()) + Double.parseDouble(outcome2.getValue()), Double.parseDouble(calculatedAmount));
     }
 }
