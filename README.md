@@ -11,10 +11,10 @@ _Desktop application made with Spring and JavaFX to help you manage your funds s
 - More ideas in development
 
 ### Working on:
-- [ ] Setting period for displayed outs/ins
+- [x] ~~Setting period for displayed outs/ins~~
+- [x] ~~Add JUnit tests to the project~~
 - [ ] Adding custom category by user
 - [ ] Adding pane for investments
-- [ ] Css styling for better UX
 
 
 #### Preview:
