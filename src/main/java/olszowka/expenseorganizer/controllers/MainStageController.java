@@ -72,7 +72,8 @@ public class MainStageController implements Initializable {
             incomeSelectCategoryText, incomeWrongValueText, incomeNameRequiredText, outcomeNameRequiredText,
             outcomeCategoryText, incomeCategoryText, outcomeSelectPositionText, incomeSelectPositionText,
             summaryTotalSumText, summarySubmittedPromptText, summaryWrongBudgetValuePromptText, summaryBudgetText,
-            budgetProgressionText, outcomePeriodStringText, incomePeriodStringText;
+            budgetProgressionText, outcomePeriodStringText, incomePeriodStringText,outcomeCurrentSumText,
+            outcomePreviousSumText, outcomeChangeSumText, incomeCurrentSumText, incomePreviousSumText, incomeChangeSumText;
 
     @FXML
     private TextField outcomeNameTextField, outcomeValueTextField, incomeNameTextField, incomeValueTextField,
@@ -113,6 +114,7 @@ public class MainStageController implements Initializable {
         initializeTableViews();
         updatePieCharts();
         preparePeriodString();
+        prepareComparedWithPreviousPeriod();
 
         initializeSummaryBudgetPane();
     }
@@ -239,11 +241,13 @@ public class MainStageController implements Initializable {
             updateOutcomeTotalSumTextField();
             updatePieChart(outcomeListOfCategories, outcomeObservableList, outcomePieChart);
             updateSummaryPieChart();
+            prepareComparedWithPreviousPeriod();
         });
         incomeObservableList.addListener((ListChangeListener<Income>) change -> {
             updateIncomeTotalSumTextField();
             updatePieChart(incomeListOfCategories, incomeObservableList, incomePieChart);
             updateSummaryPieChart();
+            prepareComparedWithPreviousPeriod();
         });
         summaryObservableList.addListener((ListChangeListener<Position>) change -> {
             updateSummaryTotalSumTextField();
@@ -327,18 +331,23 @@ public class MainStageController implements Initializable {
         summaryObservableList.addAll(incomeService.getAllPositions());
         summaryObservableList.addAll(outcomeService.getAllPositions());
 
-        outcomeTableView.setItems(outcomeObservableList);
-        incomeTableView.setItems(incomeObservableList);
-        summaryTableView.setItems(summaryObservableList);
-
         initializeTableViewSort(incomeDateColumn, incomeTableView);
         initializeTableViewSort(outcomeDateColumn, outcomeTableView);
         initializeTableViewSort(summaryDateColumn, summaryTableView);
+
+        outcomeTableView.setItems(outcomeObservableList);
+        incomeTableView.setItems(incomeObservableList);
+        summaryTableView.setItems(summaryObservableList);
     }
 
     private <T extends Position> void initializeTableViewSort(TableColumn<T, String> sortedTableColumn, TableView<T> tableView) {
         sortedTableColumn.setSortType(TableColumn.SortType.DESCENDING);
         tableView.getSortOrder().add(sortedTableColumn);
+        sortTableView(tableView);
+    }
+
+    private <T extends  Position> void sortTableView(TableView<T> tableView) {
+        tableView.sort();
     }
 
     private void updateSummaryTotalSumTextField() {
@@ -409,6 +418,7 @@ public class MainStageController implements Initializable {
                                        outcomeNameTextField, outcomeValueTextField, outcomeNameRequiredText, outcomeWrongValueText, outcomeSelectCategoryText);
 
             preparePositionsBasedOnTimeframe();
+            prepareComparedWithPreviousPeriod();
 
             wasSubmitted = true;
         }
@@ -435,6 +445,7 @@ public class MainStageController implements Initializable {
                                        incomeNameTextField, incomeValueTextField, incomeNameRequiredText, incomeWrongValueText, incomeSelectCategoryText);
 
             preparePositionsBasedOnTimeframe();
+            prepareComparedWithPreviousPeriod();
 
             wasSubmitted = true;
         }
@@ -502,6 +513,7 @@ public class MainStageController implements Initializable {
     private void onPeriodComboBoxButtonClicked() {
         preparePositionsBasedOnTimeframe();
         preparePeriodString();
+        prepareComparedWithPreviousPeriod();
     }
 
     private void preparePositionsBasedOnTimeframe() {
@@ -540,5 +552,33 @@ public class MainStageController implements Initializable {
             default:
                 return Timeframe.ALL;
         }
+    }
+
+    private void prepareComparedWithPreviousPeriod() {
+        Timeframe selectedTimeframe = getTimeFrameBasedOnIndex(periodComboBox.getSelectionModel().getSelectedIndex());
+
+        List<Income> filteredIncomesPrevious = calculationService.getPeriodicPositionsRange(incomeService.getAllPositions(), selectedTimeframe);
+        List<Income> filteredIncomesCurrent = calculationService.getPeriodicPositions(incomeService.getAllPositions(), selectedTimeframe);
+        List<Outcome> filteredOutcomesPrevious = calculationService.getPeriodicPositionsRange(outcomeService.getAllPositions(), selectedTimeframe);
+        List<Outcome> filteredOutcomesCurrent = calculationService.getPeriodicPositions(outcomeService.getAllPositions(), selectedTimeframe);
+
+        String currentIncomes, previousIncomes, changeIncomes;
+        String currentOutcomes, previousOutcomes, changeOutcomes;
+
+        currentIncomes = incomeService.calculateTotalAmountForPositions(filteredIncomesCurrent);
+        previousIncomes = incomeService.calculateTotalAmountForPositions(filteredIncomesPrevious);
+        changeIncomes = String.valueOf(Double.parseDouble(currentIncomes) - Double.parseDouble(previousIncomes));
+
+        currentOutcomes = outcomeService.calculateTotalAmountForPositions(filteredOutcomesCurrent);
+        previousOutcomes = outcomeService.calculateTotalAmountForPositions(filteredOutcomesPrevious);
+        changeOutcomes = String.valueOf(Double.parseDouble(currentOutcomes) - Double.parseDouble(previousOutcomes));
+
+        incomeCurrentSumText.setText(validationService.returnFormattedValue(currentIncomes) + " zł");
+        incomePreviousSumText.setText(validationService.returnFormattedValue(previousIncomes) + " zł");
+        incomeChangeSumText.setText(validationService.returnFormattedValue(changeIncomes) + " zł");
+
+        outcomeCurrentSumText.setText(validationService.returnFormattedValue(currentOutcomes) + " zł");
+        outcomePreviousSumText.setText(validationService.returnFormattedValue(previousOutcomes) + " zł");
+        outcomeChangeSumText.setText(validationService.returnFormattedValue(changeOutcomes) + " zł");
     }
 }
